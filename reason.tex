@@ -1,4 +1,4 @@
-\documentclass[11pt,twoside%,draft%
+\documentclass[11pt,%draft%
 ]{memoir}
 
 % Packages
@@ -17,14 +17,15 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{braket}
 \usepackage[hyphens]{url}
 \usepackage{makeidx}
 \usepackage[colorlinks=true,urlcolor=blue,linkcolor=blue,linktocpage=true]{hyperref}
 
 % Book layout
 
-\setstocksize{9in}{6in}
-\settrimmedsize{9in}{6in}{*}
+\setstocksize{8.6in}{6in}
+\settrimmedsize{8.6in}{6in}{*}
 \setlrmarginsandblock{0.8in}{0.8in}{*}
 \setulmarginsandblock{0.8in}{*}{1}
 \setlength{\headsep}{0.22in}
@@ -38,16 +39,18 @@
 % Page styels
 
 \makepagestyle{thphp}
-\makeoddhead{thphp}{}{}{\rightmark}
-\makeevenhead{thphp}{\leftmark}{}{}
-\makeoddfoot{thphp}{}{}{{\thepage}}
-\makeevenfoot{thphp}{{\thepage}}{}{}
+\makeoddhead{thphp}{}{\rightmark}{}
+\makeevenhead{thphp}{}{\leftmark}{}
+\makeoddfoot{thphp}{}{{\thepage}}{}
+\makeevenfoot{thphp}{}{{\thepage}}{}
 
 \makepagestyle{alku}
 \makeoddhead{alku}{}{}{\leftmark}
 \makeevenhead{alku}{\leftmark}{}{}
 \makeoddfoot{alku}{}{}{{\thepage}}
 \makeevenfoot{alku}{{\thepage}}{}{}
+
+\pagestyle{thphp}
 
 % Custom environments
 
@@ -69,10 +72,13 @@
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\ee}{\mathrm{e}}
 \newcommand{\ii}{\mathrm{i}}
+\DeclareMathOperator{\Tr}{Tr}
 
 \begin{document}
 
 \frontmatter
+
+\thispagestyle{empty}
 
 \noindent{\HUGE\textbf{Reason}}
 
@@ -82,15 +88,22 @@
 
 \vspace{0.3in}
 
-\noindent Updated on August 26, 2016
+\noindent Updated on August 27, 2016
 
 \vfill
 
-\noindent\emph{This book is about fascinating things. I write about important things in my free book \emph{Revolution}.\footnote{\url{http://www.revolution.fyi}} Please consider reading it before entertaining yourself with this book.}
+\begin{quote}
+\noindent\emph{This book is about fascinating things. I write about important things in my other free book \emph{Revolution}.\footnote{\url{http://www.revolution.fyi}} Please consider reading it before entertaining yourself with this book.}
+\end{quote}
 
-\vspace{0.3in}
+\vfill
+%\vspace{0.3in}
 
-\noindent This book is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.\footnote{\url{https://creativecommons.org/licenses/by-sa/4.0/}} See the source repository\footnote{\url{https://github.com/konstakurki/reason/}} for {\LaTeX} and other files.
+\noindent Copyright {\textcopyright} 2016 Konsta Kurki
+
+\vspace{0.18in}
+
+\noindent This book is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.\footnote{\url{https://creativecommons.org/licenses/by-sa/4.0/}} See the source repository\footnote{\url{https://github.com/konstakurki/reason/}} for {\LaTeX} and associated files.
 
 \newpage
 
@@ -302,7 +315,7 @@ Let's investigate the issue. Take the interval
 \begin{eqna}
     I=[0,1[\;\doteq\lbrace x\in\RR : 0\leq x<1\rbrace.
 \end{eqna}
-There's a surjection from \(I\) to \(\RR\) (take for example \(]\frac{1}{2},1[\,\subset I\), stretch it to fill the whole \(\RR\) by a \(\tan(x)\)-like function and map the rest anywhere you want) and an injection (the trivial \(x\mapsto x\)), so \(|I|=|\RR|\). To find the cardinality of \(\RR\) it is enough to study \(I\).% schröder bernstein theorem
+There's a surjection from \(I\) to \(\RR\) (take for example \(]0,1[\,\subset I\), stretch it to fill the whole \(\RR\) by a \(\tan(x)\)-like function and map the rest anywhere you want) and an injection (the trivial \(x\mapsto x\)), so \(|I|=|\RR|\). To find the cardinality of \(\RR\) it is enough to study \(I\).% schröder bernstein theorem
 
 Any \(x\in I\) is either smaller than \(\frac{1}{2}\) or greater or equal to \(\frac{1}{2}\), so it belongs to either \([0,\frac{1}{2}[\) or \([\frac{1}{2},1[\), that is, it belongs either to the forst or the socond half of \(I\). Say \(x\in[0,\frac{1}{2}[\). Then we can ask the same question again: is \(x\) in \([0,\frac{1}{4}[\) or \([\frac{1}{4},\frac{1}{2}[\)? This time \(x\) was found in the right interval. We continue and get an infinite sequense, ``left, right\ldots'', or \((\leftarrow,\rightarrow,\dotsc)\).
 
@@ -483,9 +496,9 @@ in other words, \(m^2\) would be an even integer. The square of an odd integer i
 \end{eqna}
 so also \(n\) is even, of the form \(n=\tilde{k}\). Now we can eliminate the \(2\)'s and get another fractional representation of \(\sqrt{2}\).
 
-But this is supposed to work with any fractional representation of \(\sqrt{2}\), including the one from which we have already eliminated all common factors. This is a contradiction and the only possibility is that \(\sqrt{2}\) does not have a fractional representation; in other words, it is irrational.
+But this is supposed to work with any fractional representation of \(\sqrt{2}\), including the one from which we have already eliminated all common factors. This is a contradiction and the only possibility is that \(\sqrt{2}\) has no fractional representation at all; in other words, it is irrational.
 
-The numerical value of \(\sqrt{2}\) is approximately \(1.4\). Other important irrational numbers include the circle constant \(\tau\approx6.3\)\footnote{The circle constant \(\tau=2\pi\) is the circumference of a circle of radius \(1\). Even though \(\tau\) is more natural choice, for historical reasons \(2\pi\) is used widely. See \url{http://tauday.com/tau-manifesto}.} and Euler's number \(\ee\approx2.7\). It's not that straightforward to show they're irrational.
+The numerical value of \(\sqrt{2}\) is approximately \(1.4\). Other important irrational numbers include the circle constant \(\tau\approx6.3\)\footnote{The circle constant \(\tau=2\pi\) is the circumference of a circle of radius \(1\). Even though \(\tau\) is more natural choice, for historical reasons \(2\pi\) is used widely. See \url{http://tauday.com/tau-manifesto}.} and Euler's number \(\ee\approx2.7\). I don't know how to show they're irrational.
 
 Without \(\RR\) differential calculus would be difficult. There's no problem in defining derivative of a function \(f:\QQ\rightarrow\QQ\), but that derivative would have peculiar properties. Consider for example the function
 \begin{eqna}
@@ -502,21 +515,52 @@ Is \(\RR\) enough? Consider equation
 \begin{eqna}
     x^2=-1.
 \end{eqna}
-There's no real number that would solve it. Anyway, we can define so-called imaginary unit \(\ii\) as a special number that solves the equation. Naturally also \(-\ii\) solves it. Now we have new numbers, each of them of the form \(z=a+\ii\,b\), called complex numbers. The set of complex numbers is denoted by \(\CC\). Any polynomial has a solution in \(\CC\).
+There's no real number that would solve it. Anyway, we can define so-called imaginary unit \(\ii\) as a special number that solves the equation. Naturally also \(-\ii\) solves it. Now we have new numbers, each of them of the form \(z=a+\ii\,b\) with \(a,b\in\RR\), called complex numbers. Real number multiplication and the property \(\ii^2=-1\) determines the genera complex number product
+\begin{eqnb}
+    z_1z_2&=&(a_1+\ii\,b_1)(a_2+\ii\,b_2)\nonumber\\
+    &=&a_1a_2+a_1\,\ii\,b_2+\ii\,b_1a_2+\ii^2b_1b_2\nonumber\\
+    &=&a_1a_2-b_1b_2+\ii\,(a_1b_2+b_1a_2).\label{complexnumberproduct}
+\end{eqnb}
+The set of complex numbers is denoted by \(\CC\). Any polynomial has a solution in \(\CC\).
 
-\(\CC\) is clearly bijective to \(\RR^2\). Indeed, a more careful definition of \(\CC\) starts from \(\RR^2\) and defines a particular multiplication rule. We then have \(0=(0,0)\), 1=\((1,0)\), \(\ii=(0,1)\) and so on.
+\(\CC\) is clearly bijective to \(\RR^2\). Indeed, a more careful definition of \(\CC\) starts from \(\RR^2\) and explicitly defines the product \eqref{complexnumberproduct} for pairs \((a,b)\in\RR^2\). We then have \(0=(0,0)\), 1=\((1,0)\), \(\ii=(0,1)\) and so on.
 
-It's useful to picture complex numbers as a plane. We can express a complex number \(z\) not only as a pair \((a,b)\) of Cartesian coordinates of a plane, but also as a pair \((\theta,r)\) of polar coordinates. Here \(\theta\) is the angle that a line drawn from \(0\) to \(z\) makes with a line drawn from \(0\) to \(1\) and \(r\) is the length of the line from \(0\) to \(z\) which by Pythagorean theorem is equal to \(\sqrt{a^2+b^2}\) when \(z=a+\ii\,b\). The length \(r\) is also called the norm of \(z\) and is denoted by \(|z|\).
+It's useful to picture complex numbers as a plane. We can express a complex number \(z\) not only as a pair of Cartesian coordinates \((a,b)\) but also as a pair of polar coordinates \((\theta,|z|)\). Here \(\theta\) is the angle that a line drawn from \(0\) to \(z\) makes with the line drawn from \(0\) to \(1\) and \(|z|\) is the distance of \(z\) from \(0\), which is also called the norm of \(z\). By Pythagorean theorem
+\begin{eqna}
+    |z|=\sqrt{a^2+b^2}.
+\end{eqna}
 
 In polar coordinates the multiplication of complex numbers becomes very simple:
 \begin{eqna}
-    (\theta_1,r_1)\cdot(\theta_2,r_2)=(\theta_1+\theta_2,r_1r_2).
+    (\theta_1,|z_1|)\cdot(\theta_2,|z_2|)=(\theta_1+\theta_2,|z_1||z_2|).
 \end{eqna}
-Multiplicating \(z\) by a complex number of unit norm just rotates \(z\) in the complex plane. This is a heuristic explanation why the exponential function with an imaginary argument, that is, with an argument of the form \(z=\ii\,x\) in which \(x\in\RR\), has the form\footnote{\url{https://en.wikipedia.org/wiki/Euler\%27s_formula}}
+Multiplicating \(z\) by a complex number of unit norm just rotates \(z\) in the complex plane.
+
+Consider the exponential function with an imaginary argument, that is, with an argument of the form \(z=\ii x\) with \(x\in\RR\). What it should mean is not obvious, but in order to make sense it should at least have the properties
 \begin{eqna}
-    \ee^{ix}=\cos(x)+\ii\sin(x).
+    \ee^{\ii x}=\left(\ee^\ii\right)^x\qquad\text{and}\qquad\ee^{\ii\cdot0}=1.
 \end{eqna}
-This is of great help since the exponential function is much simpler than trigonometric functions.
+Requiring these properties and defining \(\ee^\ii=(\varphi,1)\) for some \(\varphi\), then
+\begin{eqna}
+    \ee^{\ii x}=(\varphi,1)(\varphi,1)\dotsb=(x\cdot\varphi,1),
+\end{eqna}
+at least if \(x\in\NN\). In other words, \(x\) acts as a parameter which rotates \(\ee^{\ii\,x}\) around the unit circle of the complex plane. By choosing \(\varphi\) in an appropriate way we get
+\begin{eqna}
+    \ee^{\ii x}=\cos(x)+\ii\sin(x).
+\end{eqna}
+This is called Euler's formula.
+
+The only reasonable and used definition of \(\ee^{z}\) with \(z\in\CC\) yhtyy to this. It is
+\begin{eqna}
+    \ee^{z}=\ee^{|z|}(\cos(x)+\ii\sin(x)).
+\end{eqna}
+This is equal to the power series
+\begin{eqna}
+    \sum_{n=0}^\infty\frac{z^n}{n!},
+\end{eqna}
+the Taylor series of \(\ee^{x}\) with \(x\in\RR\).
+
+Euler's formula is of great help since it lets us use the exponential function instead of trigonometric ones which are much more difficult to handle.
 
 Some subsets of \(\CC\) have fascinating properties. Consider a sequence \(z_n\) defined by starting from \(z_0=0\) and calculating the rest by the formula
 \begin{eqna}
@@ -524,14 +568,14 @@ Some subsets of \(\CC\) have fascinating properties. Consider a sequence \(z_n\)
 \end{eqna}
 in which \(c\in\CC\) is some constant. Now we can ask, does this sequence diverge away from zero, or will it circulate somewhere near it forever? This obviously depends on \(c\). The Mandelbrot set, denoted by \(M\), is the set of complex numbers \(c\) for which the sequence does not diverge to infinity. Figure \ref{mandelbrot_picture} shows a picture of \(M\).
 
-\begin{figure}
+\begin{figure}[ht]
     \centering
-    \includegraphics[width=\textwidth]{graphics/mandelbrot.jpg}
+    \includegraphics[width=\textwidth,trim={230 530 570 530},clip]{graphics/mandelbrot.jpg}
     \caption{The Mandelbrot set \(M\). Points \(z\in M\) are colored black. Other points are colored according to their estimated distances to \(\partial M\).}
     \label{mandelbrot_picture}
 \end{figure}
 
-The mandelbrot set is a fractal, which means that by zooming into the set similar patterns appearagain and again. A video\footnote{\url{https://vimeo.com/12185093}} shows zooming into the border of \(M\) reaching a zoom factor of \(2^{760}\). The video is not art nor kitsch; it is a visualisation of \(M\) created solely out of its definition. The colors indicate how fast a point \(c\notin M\) diverges from zero. (The music is not generated from the definition of \(M\).)
+The mandelbrot set is a fractal, which means that by zooming into the set similar patterns appearagain and again. A video\footnote{\url{https://vimeo.com/12185093}} shows zooming into the border of \(M\) eventually reaching a zoom factor of \(2^{760}\). The video is not art nor kitsch; it is a visualisation of \(M\) created solely out of its definition. The colors indicate how fast a point \(c\notin M\) diverges from zero. (The music is not generated from the definition of \(M\).)
 
 According to a 1991 publication\footnote{\url{https://arxiv.org/abs/math/9201282}} by M. Shishikura, the Hausdorff dimension of the border of \(M\) is two. The precise definition of Hausdorff dimension is complicated, but it can be understood heuristically.
 
@@ -572,7 +616,76 @@ Is SO(3) simply connected? Parametrize a tau-rotation with a belt. You'll notice
 
 %\chapter{Linear algebra}
 
+%examples: arrows, R^n, C^n, function spaces, spaces of linear operators, solutions of a linear differential equaition
+
+%applications: geometry (tangent space), velocity, quantum mechanics, neural networks, cryptography, lie algebra
+
+%\chapter{overline of mathematics}
+
+\begin{comment}
+
+propositional logic
+set theory
+coputability theory
+
+algebra
+topology
+
+analysis
+geometry
+functional analysis
+probability
+Lie groups
+algebraic topology
 
 
+
+
+\end{comment}
+
+\newpage
+
+\subsection{Axioms of classical mechanics}
+
+In the following \(\mathcal{M}\) is a differentiable manifold.
+
+\begin{itemize}
+    \item The state of the system is associated with a function \(\rho:\mathcal{M}\rightarrow\RR\) for which it holds that 
+    \begin{eqna}
+        \rho(x)\geq0\qquad\text{and}\qquad\int_\mathcal{M}\rho(x)\,\dd x=1.\nonumber
+    \end{eqna}
+    \item Each obervable quantity \(O\) is associated with a function \(\mathcal{O}:\mathcal{M}\rightarrow\RR\).
+    \item The value of an observable quantity \(O\) in state \(\rho\) is
+    \begin{eqna}
+        \langle\mathcal{O}\rangle_\rho=\int_\mathcal{M}\rho(x)\mathcal{O}(x)\,\dd x.\nonumber
+    \end{eqna}
+\end{itemize}
+
+\subsection{Axioms of quantum mechanics}
+
+In the following \(\mathcal{H}\) is a Hilbert space equipped with an inner product.
+
+\begin{itemize}
+    \item The state of the system is associated with a linear, self-adjoint operator \(\rho:\mathcal{H}\rightarrow\mathcal{H}\) for which it holds that
+    \begin{eqna}
+        \braket{\psi|\rho|\psi}\geq0\qquad\text{and}\qquad\Tr(\rho)=1.\nonumber
+    \end{eqna}
+    \item Each observable quantity \(O\) is associated with a linear operator, self-adjoint operator \(\mathcal{O}:\mathcal{H}\rightarrow\mathcal{H}\).
+    \item The expected value of an observable quantity \(O\) in state \(\rho\) is
+    \begin{eqna}
+        \langle\mathcal{O}\rangle_\rho=\Tr(\rho\mathcal{O}).\nonumber
+    \end{eqna}
+\end{itemize}
+
+\subsection{Quantization}
+\begin{itemize}
+    \item Differentiable manifold \(\rightarrow\) Hilbert space equipped with an inner product
+    \item Real-valued function \(\rightarrow\) linear, self-adjoint operator
+    \item positive semidefinity as a function \(\rightarrow\) positive semidefinity as an operator
+    \item Integral over the manifold \(\rightarrow\) trace in Hilbert space
+\end{itemize}
+%tytyy mainita koordinaatit -> complete setti operaattoreita, ja muut observaabelit vanhojen funktioina, ja poisson bracket -> kommutaattori, ja karteesinen tulo -> tensoritulo
+
+%tarvitaan klassiset vastaavuudet koska limillä hbar -> 0 täytyy ilmestyy klassinen teoria
 
 \end{document}
