@@ -1,4 +1,4 @@
-\documentclass[11pt,%draft%
+\documentclass[11pt,oneside,%draft%
 ]{memoir}
 
 % Packages
@@ -7,7 +7,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{textcomp}
-\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
 \usepackage{IEEEtrantools}
 \usepackage{graphicx}
 \usepackage[gen]{eurosym}
@@ -17,11 +17,41 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{listings}
 \usepackage{braket}
 \usepackage[hyphens]{url}
 \usepackage{makeidx}
 \usepackage[colorlinks=true,urlcolor=blue,linkcolor=blue,linktocpage=true]{hyperref}
 
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+\lstset{
+	language=python,
+	%backgroundcolor=\color{black},
+    basicstyle=\small\ttfamily\color[HTML]{000000},
+    lineskip=1pt,
+    showstringspaces=false,
+    keywordstyle=\color[HTML]{000080},
+    commentstyle=\color[HTML]{006699},
+    stringstyle=\color[HTML]{830300},
+    identifierstyle=\color[HTML]{CC6600},
+    %frame=single,
+    %frameround=tttt
+	%tabsize=4,
+	%rulecolor=,
+        %upquote=true,
+        %aboveskip={1.5\baselineskip},
+        %columns=fixed,
+        %showstringspaces=false,
+        %extendedchars=true,
+        %breaklines=true,
+        %prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        %frame=single,
+        %showtabs=false,
+        %showspaces=false,
+        %identifierstyle=\ttfamily,
+}
 % Book layout
 
 \setstocksize{8.6in}{6in}
@@ -34,7 +64,6 @@
 \checkandfixthelayout
 \renewcommand{\cftdot}{}
 \setlength\cftparskip{1pt}
-\setlength{\unitlength}{0.5\textwidth}
 
 % Page styels
 
@@ -56,6 +85,7 @@
 
 \newenvironment{eqna}{\begin{IEEEeqnarray}{c}}{\end{IEEEeqnarray}\ignorespacesafterend}
 \newenvironment{eqnb}{\begin{IEEEeqnarray}{cCl}}{\end{IEEEeqnarray}\ignorespacesafterend}
+\newtheorem{teoreema}{Theorem}
 
 
 
@@ -88,13 +118,11 @@
 
 \vspace{0.3in}
 
-\noindent Updated on August 27, 2016
+\noindent In progress---updated on August 29, 2016
 
 \vfill
 
-\begin{quote}
 \noindent\emph{This book is about fascinating things. I write about important things in my other free book \emph{Revolution}.\footnote{\url{http://www.revolution.fyi}} Please consider reading it before entertaining yourself with this book.}
-\end{quote}
 
 \vfill
 %\vspace{0.3in}
@@ -103,7 +131,7 @@
 
 \vspace{0.18in}
 
-\noindent This book is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.\footnote{\url{https://creativecommons.org/licenses/by-sa/4.0/}} See the source repository\footnote{\url{https://github.com/konstakurki/reason/}} for {\LaTeX} and associated files.
+\noindent This book is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.\footnote{\url{https://creativecommons.org/licenses/by-sa/4.0/}} See the book webpage\footnote{\url{http://konstakurki.co/reason/}} for the source repository and the newest version and author's personal site\footnote{\url{http://konstakuri.co/}} for contact information.
 
 \newpage
 
@@ -225,14 +253,13 @@ The road will be long and difficult. Populism isn’t of help here—we need to 
 %
 \end{comment}
 
-\chapter{Math}
+\chapter{Numbers}
 
+We all use some math: numbers. To get into them, we start from sets. The set of living people, the set of grains of salt in a jar, the set of up and down, which we might denote by \(\lbrace\uparrow,\downarrow\rbrace\). % määritelmiä ja merkintöjä kuten unioni, leikkaus, functio yms.
 %We all use numbers.
 
 %\section{\(\NN\), \(\ZZ\), \(\QQ\), \(\RR\) and \(\CC\)}
-\section{Sets and numbers}
-
-Set is a central concept in mathematics. The set of living people, the set of grains of salt in a jar, the set of up and down, which we might denote by \(\lbrace\uparrow,\downarrow\rbrace\). % määritelmiä ja merkintöjä kuten unioni, leikkaus, functio yms.
+\section{Counting things}
 
 An elementary question about any set is, ``how many elements it has?'' The answer is called the cardinality of the set. For instance, the cardinality of \(\lbrace\uparrow,\downarrow\rbrace\), denoted by \(|\lbrace\uparrow,\downarrow\rbrace|\), is two. If two sets \(A\) and \(B\) have the same cardinality, we can put the elements of \(A\) in one-to-one correspondence with the elementes of \(B\), in other words, there's a bijective function \(f:A\rightarrow B\). %If \(\lbrace\uparrow,\downarrow\rbrace\) and \(B=\lbrace\leftarrow,\rightarrow\rbrace\),
 
@@ -283,9 +310,31 @@ Now take \(X\) to be the set of all sets. Such a set contains all its subset, so
 
 Another too peculiar set is
 \begin{eqna}
-    X=\lbrace x:x\notin x\rbrace.
+    R=\lbrace x:x\notin x\rbrace.
 \end{eqna}
-Does it hold that \(X\in X\)? If so, then by the definition of \(X\) we have \(X\notin X\). And the other way around. This is called Russel's paradox. The set of all sets and Russels's paradox show that this naive set theory we're doing here does not stand on perfectly firm grounds. A little bit of paranoia will be good.
+Does it hold that \(R\in R\)? If so, then by the definition of \(R\) we have \(R\notin R\)---and the other way around. This is a problem called Russel's paradox. The pradox can also be put in everyday language:
+\begin{quote}
+    In a village there's a man called Russell. He maintains GNU+Linux systems of some villagers. To be more specific, Russell maintains the GNU+Linux system of every villager who doesn't maintain their own system. An unsolved riddle puzzles the villagers: does Russell maintain his own GNU+Linux system?
+\end{quote}
+If Russel maintains his own system, then he maintains the system of a person who maintains his own system, sot that can't be true. On the other hand, if don't do that, then he does not maintain the system of every veillager not maintaining their own system.
+
+The resolution of this parctical version is simple: no such Russell exists. In the same way, the set \(R\) does not exist. Russell, \(R\) and the set of all sets demonstrate that some caution is needed in defining sets.
+
+Back to numbers. We can define natural numbers in terms of sets:
+\begin{eqna}
+    0=\emptyset,\quad 1=\lbrace0\rbrace,\quad2=\lbrace0,1\rbrace,\quad3=\lbrace0,1,2\rbrace
+\end{eqna}
+and so on. Every number is founded? on \(\emptyset\), for example
+\begin{eqna}
+    3=\lbrace\emptyset,\lbrace\emptyset\rbrace,\lbrace\lbrace\emptyset\rbrace\rbrace\rbrace.
+\end{eqna}
+For any natural number \(n\) it holds that \(n+1=n\cup\lbrace n\rbrace\). In this sense we can think of \(\NN\) as another number! In this context it is denoted by \(\omega\).  We can count even further:
+\begin{eqna}
+    \omega+1=\omega\cup\lbrace\omega\rbrace=\lbrace1,2,3,\dotsc,\lbrace1,2,3,\dotsc\rbrace\rbrace.
+\end{eqna}
+Numbers formed this way are called ordinals. \(\omega\) is the first infinite ordinal. At first it seems obvious that ordinals form a set \(O\). But \(O\) is also an ordinal number, just like \(\NN\), and therefore is also \(O+1=O\cup\lbrace O\rbrace\). On the other hand, \(O+1\in O\), but that seems weird; for example \(3\notin 2\). The set of all ordinals is flawed in the same way as the set of all sets.
+
+This naive set theory doesn't work well for studying these issues. In more advanced treatments ordinals form so-called proper class, as do all sets?. Proper classes are ``too large'' to be sets.
 
 If we place all integers equidistantly in a row which extends infinitely far both left and right, we get a sketch of the number line. The number line symbolizes size, distance, amount and other continuous quantities. \(\ZZ\) only forms a sparse part of the whole line. If we take all the points, we get \(\RR\), the set of real numbers, also called the continuum. Let's take a question from the list presented in the first chapter.
 \begin{quote}
@@ -315,7 +364,7 @@ Let's investigate the issue. Take the interval
 \begin{eqna}
     I=[0,1[\;\doteq\lbrace x\in\RR : 0\leq x<1\rbrace.
 \end{eqna}
-There's a surjection from \(I\) to \(\RR\) (take for example \(]0,1[\,\subset I\), stretch it to fill the whole \(\RR\) by a \(\tan(x)\)-like function and map the rest anywhere you want) and an injection (the trivial \(x\mapsto x\)), so \(|I|=|\RR|\). To find the cardinality of \(\RR\) it is enough to study \(I\).% schröder bernstein theorem
+There's a surjection from \(I\) to \(\RR\) (take for example \(]0,1[\,\subset I\), stretch it to fill the whole \(\RR\) by a \(\tan(x)\)-like function and map \(0\) to \(0\)) and an injection (the trivial \(x\mapsto x\)), so \(|I|=|\RR|\). To find the cardinality of \(\RR\) it is enough to study \(I\).
 
 Any \(x\in I\) is either smaller than \(\frac{1}{2}\) or greater or equal to \(\frac{1}{2}\), so it belongs to either \([0,\frac{1}{2}[\) or \([\frac{1}{2},1[\), that is, it belongs either to the forst or the socond half of \(I\). Say \(x\in[0,\frac{1}{2}[\). Then we can ask the same question again: is \(x\) in \([0,\frac{1}{4}[\) or \([\frac{1}{4},\frac{1}{2}[\)? This time \(x\) was found in the right interval. We continue and get an infinite sequense, ``left, right\ldots'', or \((\leftarrow,\rightarrow,\dotsc)\).
 
@@ -394,87 +443,56 @@ well-ordering here
 
 \section{Rationals, reals or something more?}
 
-The uncountability of \(\RR\) may seem peculiar. You might ask, ``wouldn't \(\QQ\) be enough for all practical purposes?'' One discomfortable property of any countable set \(X=\lbrace x_i\in\RR : i\in\NN\rbrace\) of \(\RR\) like \(\QQ\) is that we can cover it using almost nothing. To do it, take a collection \(\lbrace I_i : i\in\NN\rbrace\) of intervals
+The uncountability of \(\RR\) may seem peculiar. You might ask, ``wouldn't \(\QQ\) be enough for all practical purposes?'' One discomfortable property of any countable subsetset \(X=\lbrace x_i\in\RR : i\in\NN\rbrace\) of \(\RR\) like \(\QQ\) is that we can cover it using almost nothing. To do it, take a collection \(\lbrace I_i : i\in\NN\rbrace\) of intervals
 \begin{eqna}
-    I_0=[x_0,x_0+\frac{1}{2}c],\quad I_1=[x_1,x_1+\frac{1}{4}c],\,\dotsc
+    I_0=\left[x_0,x_0+\tfrac{1}{2}c\right],\quad I_1=[x_1,x_1+\tfrac{1}{4}c],\,\dotsc
 \end{eqna}
 with \(c\in\RR\). The intervals clearly cover \(X\); in symbols,
 \begin{eqna}
     X\subset\bigcup_{i\in\NN}I_i.
 \end{eqna}
-The length of the interval halves every time we go one step further in the sequence \(I_i\). The sum of the lengths is
+The length of the interval halves every time we go one step further in the sequence \(I_i\). The first interval has length \(\frac{1}{2}c\), the second \(\frac{1}{4}c\) and so on. If we juxtapose all these \(I_i\)'s in a row, we get a line that looks like
 \begin{eqna}
-    \frac{1}{2}c+\frac{1}{4}c+\frac{1}{8}c+\dotsb.
+    \setlength{\unitlength}{0.6666\textwidth}
+    \begin{picture}(1,0.025)
+        %\put(0,0){\vector(1,0){0.5}}
+        %\put(0.5,0){\vector(1,0){0.25}}
+        %\put(0.5,0){\vector(1,0){0.25}}
+        \put(0,0.025){\line(1,0){1}}
+        \put(0,0){\line(0,1){0.05}}
+        \put(0.5,0){\line(0,1){0.05}}
+        \put(0.75,0){\line(0,1){0.05}}
+        \put(0.875,0){\line(0,1){0.05}}
+        \put(0.9375,0){\line(0,1){0.05}}
+        \put(0.96875,0){\line(0,1){0.05}}
+        \put(0.984375,0){\line(0,1){0.05}}
+        \put(0.9921875,0){\line(0,1){0.05}}
+        \put(0.99609375,0){\line(0,1){0.05}}
+        \put(0.998046875,0){\line(0,1){0.05}}
+        \put(0.9990234375,0){\line(0,1){0.05}}
+    \end{picture}.
 \end{eqna}
-From Figure \ref{geometric_series_picture} we see that the geometric series
-\begin{figure}
-    \centering
-    \begin{picture}(1,1)
-        \put(0,0){\line(1,0){1}}
-        \put(0,1){\line(1,0){1}}
-        \put(0,0){\line(0,1){1}}
-        \put(1,0){\line(0,1){1}}
+Their sum is exaclty \(c\). The Greek philosopher Zeno of Elea was worried that if you are about to travel to a neighboring village, you muts first get halfway there. But to get halfway there, you must get quarter of the way there, and so on, \emph{ad infinitum}.
 
+So, even though the number line is infinitely long and rational numbers are densely spaced on it, we can cover them with lines of which combined length is \(c\) which can be anything, for example \(\frac{1}{1000}\). This sounds paradoxal, but it should be kept in mind that had we used a finite collection of lines to cover \(\QQ\), then their combined length would have necessarily been \(\infty\).%any uncountable sum of positive terms is necessarily infinite?
 
-        \put(0.5,0){\line(0,1){1}}
-        \put(0.5,0.5){\line(1,0){0.5}}
-        %\put(0.25,0.5){\circle{0.1}}
-        \put(0.228,0.481){\(\frac{1}{2}\)}
-        
-        \put(0.75,0.5){\line(0,1){0.5}}
-        \put(0.75,0.75){\line(1,0){0.25}}
-        %\put(0.75,0.25){\circle{0.1}}
-        \put(0.728,0.231){\(\frac{1}{4}\)}
+It is said that \(\QQ\) is a set of measure\footnote{\url{https://en.wikipedia.org/wiki/Lebesgue_measure}} zero. \(\QQ\) is small in both the sense of cardinality and of measure; like \(\ZZ\), it's only a tiny portion of \(\RR\). We should expect to meet irrational numebers in practical situations.
 
-        \put(0.875,0.75){\line(0,1){0.25}}
-        \put(0.875,0.875){\line(1,0){0.125}}
-        %\put(0.625,0.75){\circle{0.1}}
-        \put(0.603,0.731){\(\frac{1}{8}\)}
-
-        \put(0.9375,0.875){\line(0,1){0.125}}
-        \put(0.9375,0.9375){\line(1,0){0.0625}}
-        %\put(0.875,0.625){\circle{0.1}}
-        \put(0.821,0.606){\emph{etc.}}
-
-        \put(0.96875,0.9375){\line(0,1){0.0625}}
-        \put(0.96875,0.96875){\line(1,0){0.03125}}
-
-        \put(0.984375,0.96875){\line(0,1){0.03125}}
-        \put(0.984375,0.984375){\line(1,0){0.015625}}
-
-        \put(0.9912875,0.984375){\line(0,1){0.015625}}
-        \put(0.9912875,0.9912875){\line(1,0){0.0078125}}
-
-    \end{picture}
-    \caption{geometric series picture}
-    \label{geometric_series_picture}
-\end{figure}
+Pythagorean Theorem states that the square of the hypotenuse \(c\) of a right triangle is equal to the sum of the squares of the opposite two sides \(a\) and \(b\). By calculating the area of the big square
 \begin{eqna}
-    \frac{1}{2}+\frac{1}{4}+\frac{1}{8}+\dotsb=\sum_{i=1}^\infty\frac{1}{2^i}
+    \setlength{\unitlength}{0.5\textwidth}
+    \begin{picture}(0.33333,0.333333)
+        \put(0,0){\line(1,0){0.33333}}
+        \put(0,0.33333){\line(1,0){0.33333}}
+        \put(0,0){\line(0,1){0.33333}}
+        \put(0.3333,0){\line(0,1){0.3333}}
+        \put(0,0.1111){\line(1,2){0.1111}}
+        \put(0.1111,0.3333){\line(2,-1){0.2222}}
+        \put(0.2222,0){\line(1,2){0.1111}}
+        \put(0,0.1111){\line(2,-1){0.2222}}
+    \end{picture}\nonumber
 \end{eqna}
-is equal to \(1\) and so the sum of the lengths of the intervals is \(c\), which could be anything, for example \(\frac{1}{1000}\). This is counterintuitive to me; given that rational numbers are densely spaced on \(\RR\), how is this possible?
-
-It is said that \(X\) is a set of measure\footnote{\url{https://en.wikipedia.org/wiki/Lebesgue_measure}} zero. \(\QQ\) is small in both the sense of cardinality and of measure; like \(\ZZ\), it's only a tiny portion of \(\RR\). We should expect to meet irrational numebers in practical situations.
-
-Pythagorean Theorem states that the square of the hypotenuse \(c\) of a right triangle is equal to the sum of the squares of the opposite two sides \(a\) and \(b\). By calculating the area of the big square in Figure \ref{pythagorean_picture} in two different ways, we get
-\begin{figure}
-    \centering
-    \begin{picture}(1,1)
-        \put(0,0){\line(1,0){1}}
-        \put(0,1){\line(1,0){1}}
-        \put(0,0){\line(0,1){1}}
-        \put(1,0){\line(0,1){1}}
-        \put(0,0.3333){\line(1,2){0.3333}}
-        \put(0.3333,1){\line(2,-1){0.6666}}
-        \put(0.6666,0){\line(1,2){0.3333}}
-        \put(0,0.3333){\line(2,-1){0.6666}}
-        %\put(0.25,0.02){\(a\)}
-        %\put(0.01,0.12){\(b\)}
-        %\put(0.3,0.2){\(c\)}
-    \end{picture}
-    \caption{The area of the big square is the combined area of the four identical triangles and the smaller square.}
-    \label{pythagorean_picture}
-\end{figure}
+in two different ways, we get
 \begin{eqna}
     (a+b)^2=4\left(\frac{1}{2}ab\right)+c^2
 \end{eqna}
@@ -515,7 +533,7 @@ Is \(\RR\) enough? Consider equation
 \begin{eqna}
     x^2=-1.
 \end{eqna}
-There's no real number that would solve it. Anyway, we can define so-called imaginary unit \(\ii\) as a special number that solves the equation. Naturally also \(-\ii\) solves it. Now we have new numbers, each of them of the form \(z=a+\ii\,b\) with \(a,b\in\RR\), called complex numbers. Real number multiplication and the property \(\ii^2=-1\) determines the genera complex number product
+There's no real number that would solve it. Anyway, we can define so-called imaginary unit \(\ii\) as a special number that solves the equation. Naturally also \(-\ii\) solves it. Now we have new numbers, each of them of the form \(z=a+\ii\,b\) with \(a,b\in\RR\), called complex numbers. Real number multiplication and the property \(\ii^2=-1\) determines the genera complex number product %imaginary unit is a 'rotation operator'
 \begin{eqnb}
     z_1z_2&=&(a_1+\ii\,b_1)(a_2+\ii\,b_2)\nonumber\\
     &=&a_1a_2+a_1\,\ii\,b_2+\ii\,b_1a_2+\ii^2b_1b_2\nonumber\\
@@ -525,22 +543,35 @@ The set of complex numbers is denoted by \(\CC\). Any polynomial has a solution 
 
 \(\CC\) is clearly bijective to \(\RR^2\). Indeed, a more careful definition of \(\CC\) starts from \(\RR^2\) and explicitly defines the product \eqref{complexnumberproduct} for pairs \((a,b)\in\RR^2\). We then have \(0=(0,0)\), 1=\((1,0)\), \(\ii=(0,1)\) and so on.
 
-It's useful to picture complex numbers as a plane. We can express a complex number \(z\) not only as a pair of Cartesian coordinates \((a,b)\) but also as a pair of polar coordinates \((\theta,|z|)\). Here \(\theta\) is the angle that a line drawn from \(0\) to \(z\) makes with the line drawn from \(0\) to \(1\) and \(|z|\) is the distance of \(z\) from \(0\), which is also called the norm of \(z\). By Pythagorean theorem
+It's useful to picture complex numbers as a plane. The imaginary unit \(\ii\) then acts as a rotation operator: it rotates \(\ii\) and \(1\) by \(\frac{1}{4}\tau\) counter-clockwise, an
+ 
+This also holds for any complex number:
+\begin{eqna}
+    \setlength{\unitlength}{0.12\textwidth}
+    \begin{picture}(3,1)
+        \put(0,0){\line(1,0){0.333333}}
+        \put(0,0){\line(0,1){1}}
+        \put(1,0.5){\vector(1,0){0.5}}
+        \put(1.1,0.6){\(\cdot\ii\)}
+    \end{picture}\nonumber
+\end{eqna}
+
+We can express a complex number \(z\) not only as a pair of Cartesian coordinates \((a_x,b_z)\) but also as a pair of polar coordinates \((\theta_z,|z|)\). Here \(\theta\) is the angle that a line drawn from \(0\) to \(z\) makes with the line drawn from \(0\) to \(1\) and \(|z|\) is the distance of \(z\) from \(0\), which is also called the norm of \(z\). By Pythagorean theorem%theta -> theta_z
 \begin{eqna}
     |z|=\sqrt{a^2+b^2}.
 \end{eqna}
 
 In polar coordinates the multiplication of complex numbers becomes very simple:
 \begin{eqna}
-    (\theta_1,|z_1|)\cdot(\theta_2,|z_2|)=(\theta_1+\theta_2,|z_1||z_2|).
+    (\theta_{z_1},|z_1|)\cdot(\theta_{z_2},|z_2|)=(\theta_{z_1}+\theta_{z_2},|z_1||z_2|).
 \end{eqna}
 Multiplicating \(z\) by a complex number of unit norm just rotates \(z\) in the complex plane.
 
 Consider the exponential function with an imaginary argument, that is, with an argument of the form \(z=\ii x\) with \(x\in\RR\). What it should mean is not obvious, but in order to make sense it should at least have the properties
 \begin{eqna}
-    \ee^{\ii x}=\left(\ee^\ii\right)^x\qquad\text{and}\qquad\ee^{\ii\cdot0}=1.
+    \ee^{\ii x}=\left(\ee^\ii\right)^x\qquad\text{and}\qquad\ee^{\ii\cdot0}=1
 \end{eqna}
-Requiring these properties and defining \(\ee^\ii=(\varphi,1)\) for some \(\varphi\), then
+of the ordinary exponential function. Requiring these properties and defining \(\ee^\ii=(\varphi,1)\) for some \(\varphi\), then
 \begin{eqna}
     \ee^{\ii x}=(\varphi,1)(\varphi,1)\dotsb=(x\cdot\varphi,1),
 \end{eqna}
@@ -575,38 +606,115 @@ in which \(c\in\CC\) is some constant. Now we can ask, does this sequence diverg
     \label{mandelbrot_picture}
 \end{figure}
 
-The mandelbrot set is a fractal, which means that by zooming into the set similar patterns appearagain and again. A video\footnote{\url{https://vimeo.com/12185093}} shows zooming into the border of \(M\) eventually reaching a zoom factor of \(2^{760}\). The video is not art nor kitsch; it is a visualisation of \(M\) created solely out of its definition. The colors indicate how fast a point \(c\notin M\) diverges from zero. (The music is not generated from the definition of \(M\).)
+The mandelbrot set is a fractal, which means that by zooming into the set similar patterns appearagain and again. A video\footnote{\url{https://vimeo.com/12185093}} shows zooming into the border of \(M\), ednoted by \(\partial M\), eventually reaching a zoom factor of \(2^{760}\). The video is not art nor kitsch; it is a visualisation of \(M\) created solely out of its definition. The colors indicate how fast the sequence corresponding to a point \(c\notin M\) diverges. (The music is not generated from the definition of \(M\).)
 
-According to a 1991 publication\footnote{\url{https://arxiv.org/abs/math/9201282}} by M. Shishikura, the Hausdorff dimension of the border of \(M\) is two. The precise definition of Hausdorff dimension is complicated, but it can be understood heuristically.
+According to a 1991 publication\footnote{\url{https://arxiv.org/abs/math/9201282}} by M. Shishikura, the Hausdorff dimension of \(\partial M\) is two. The precise definition of Hausdorff dimension is complicated, but it can be understood intuitively.
 
-When measuring the volume of a set in \(\RR^3\), we cover the set with small balls and add their volumes together. The smaller balls we use, the more precise estimate of the volume we get. A reasonable three-dimensional object has positive volume. On the other hand, its border which is a two-dimensional object has zero volume since the volume of a ball is proportional to the cube of its radius \(r\) but the number of needed balls is proportional to \(r^2\). Therefore, as we use smaller and smaller balls the estimate of the volume goes to zero.
+When measuring the volume of a set in \(\RR^3\), we cover the set with small balls and add their volumes together. The smaller balls we use, the more precise estimate of the volume we get. A simple fat object has positive volume. On the other hand, its border which is a thin object has zero volume. This is because the volume of a ball is proportional to the cube of its radius \(r\) but the number of balls needed is proportional to \(r^2\), and as we use smaller and smaller balls the estimate of the volume goes to zero.
 
-However, we can measure the area of the border by artificially changing the formula for calculating the volume of a ball from being proportional to \(r^3\) to being proportional to \(r^2\). If we want to calculate the length of a one-dimensional object, change it to being proportional to \(r\). If you use too low \(x\) in \(r^x\), you get \(\infty\). Each set has its own correct \(x\), the Hausdorff dimension of the set.
+However, we can measure the area of the border by artificially changing the formula for calculating the volume of a ball from being proportional to \(r^3\) to being proportional to \(r^2\). If we want to calculate the length of a wire-like object, we use \(r^1\). If you use too low \(x\) in \(r^x\), you get \(\infty\), and isf you use too high \(x\), you get \(0\). Each set has its own correct \(x\), the Hausdorff dimension of the set.
 
-Sets we study usually have \(x\in\NN\). The Hausdorff dimensions of a rock, a piece of paper and a length of wire are \(3\), \(2\) and \(1\). An esoteric set may have non-integer Hausdorff dimension. Usually the Hausdorff dimension of the border of a set \(X\) is less than the one of \(X\) by one.
+Sets we study usually have \(x\in\NN\). The Hausdorff dimensions of a fat, thin and a wire-like object are \(3\), \(2\) and \(1\). For a simple set \(X\) the Hausdorff dimension of \(\partial X\) is less than the one of \(X\) by one. An esoteric set may have non-integer Hausdorff dimension. 
 
-\(M\) and \(\partial M\) has the same Hausdorff dimension, two. It means that \(\partial M\) must be very wrinkled. It implies that no matter how deep we zoom into \(\partial M\), we will always see complex patterns.%define \partial M
+\(M\) and \(\partial M\) has the same Hausdorff dimension, two. It means that \(\partial M\) is infinitely long and extremely wrinkled. It implies that no matter how deep we zoom into \(\partial M\), we will always see complex patterns.
 % note that wikipedia has decent articles of almost all mathematical concepts
 % cardinality of C
 
-Let me collect the sdcs. We have the countable sets \(\NN\), \(\ZZ\) and \(\QQ\) of cardinality \(\aleph_0\) and uncountable sets \(\RR\) and \(\CC\) of cardinality \(2^{\aleph_0}\).
+We now have the countable sets \(\NN\), \(\ZZ\) and \(\QQ\) of cardinality \(\aleph_0\), uncountable sets \(\RR\) and \(\CC\) of cardinality \(2^{\aleph_0}\), proper classes \(O\) and \(\lbrace x: x\;\text{is a set}\rbrace\) and the nonexisting \(\lbrace{x:x\notin x\rbrace}\).
 
 \section{Rigor}
 
- In other words: do we embrace the Axiom of Choice or not? It seems obvious, but well-ordering seems ridiculous. Furthermore, AxC implies bizarre things like Banach-Tarski paradox.
+Earlier in this chapter I used reasoning of variable rigorouseness. I explained Hausdorff dimension quickly and showed \(|X|<|2^X|\) somewhat carefully. How rigorous to be is always a tradeoff. More rigor and you get more solid results. Less rigor and you can tackle a wider set of problems. Another question from the beginning illustrates the point:
+\begin{quote}
+    Is it possible to comb a hairy ball?
+\end{quote}
+As Figure \ref{combing_hairy_ball} shows, combing a hairy ball necessarily fails at least at one point. A cowlick is necessary. No rigor is needed. Anyway, what if the ball has some other dimension? A circle
+\begin{eqna}
+    \setlength{\unitlength}{0.1\textwidth}
+    \begin{picture}(1,1)
+        \put(0.5,0.5){\circle{1}}
+    \end{picture}\nonumber
+\end{eqna}
+can obviously be combed without cowlicks. Still no rigor needed. Anyway, in other dimensions the situation changes.
 
-The point of math: if we define precise axioms and prove theorems from those axioms carefully, then we know that every time we have a situation in which those axioms hold, then also the theorems hold. For example, a bent sheet of metal satisfies the definition of a 2-dimensional Riemannian manifold, so we know that it's curvature at any point can be characterized with two real numbers, and that curvature satisfies the Bianchi identities.
+Let's start from defining the circle, or one-dimensional sphere, denoted by \(S^1\). It is a subset of \(\RR^2\) of points which all have the same distance to some specific point. Choosing this point to be the origin and the radius being one, we can, with the aid of the Pythagorean Theorem, define \(S^1\subset\RR^2\) as those points \(x_1,x_2\) for which
+\begin{eqna}
+    x_1^2+x_2^2=1.
+\end{eqna}
+A little geometry and another use of the Pythagorean Theorem shows that \(S^2\), that is the border of usual origin-centric ball of radious one, can be definied analoguously, as a subset of \(\RR^3\) of points \(x_1,x_2,x_3\) for which it holds that
+\begin{eqna}
+    x_1^2+x_2^2+x_3^2=1.
+\end{eqna}
+In general, \(S^n\subset\RR^{n+1}\) is the set of points for which
+\begin{eqna}
+    \sum_{i=1}^nx_n^2=1.
+\end{eqna}
+Here it took some rigor to define \(n\)-dimensional sphere. Which are the values of \(n\) for which the combing can be done without cowlicks? This is a highly nontrivial question and requires rigorous mathematics.
 
-groups. examples: Z, R, SO(3) and its simply connectedness (dirac's belt), SU(2) (maybe), linear algebra
+One good reason for being rigorous is generality. If we define a mathematical concept carefully, that is, we choose so-called axioms, and prove results following from those axioms equally carefully, we get a robust sets of theorems that hold \emph{always when the axioms hold}. By being once rigorous, we get solid data of any system that satisfies the axioms.
 
-do parallel lines continue to be parallel? parallel axiom. manifolds. results: curvature tensor, bianchi identities.
+A very useful example of strictly defined mathematical concept is a group. It is a set \(G\) and a binary operation \(*:G\times G\rightarrow G\) which together satisfy the following axioms:
+\begin{itemize}
+    \item Associativity: for all \(a\), \(b\) and \(c\in G\) it holds that
+    \begin{eqna}
+        (a*b)*c=a*(b*c).
+    \end{eqna}
+    \item Identity element: there is an element \(e\in G\) such that for any \(a\in G\) it holds that
+    \begin{eqna}
+        e*a=a*e=e.
+    \end{eqna}
+    \item Inverse element: for any \(a\in G\) there is an element \(a^{-1}\in G\) for which it holds that
+    \begin{eqna}
+        a^{-1}a=a\,a^{-1}=e.
+    \end{eqna}
+\end{itemize}
+Now we can prove carefully results that hold for any group.
+\begin{teoreema}
+The identity element of a group is unique.
+\end{teoreema}
+\begin{proof}
+Let \(e\) and \(\tilde{ei}\) be identity elements. Since \(e\) is an identity, it holds that \(e*\tilde{e}=\tilde{e}\), and since \(\tilde{e}\) is an identity, it holds that \(e*\tilde{e}=e\). Therefore \(\tilde{e}=e*\tilde{e}=e\).
+\end{proof}
+
+We have already met groups. For example \(\ZZ\) with the normal addition \(+\) is a group in which \(e=0\) and \(n^{-1}=-1\). Als \(\RR\) is a group with \(+\). If we remove \(0\) from \(\RR\), it becomes a group with the normal multiplication \(\cdot\) the identity being \(1\) and inverse \(x^{-1}=\frac{1}{x}\). Also \(\lbrace\CC\setminus\lbrace{0}\rbrace,\cdot\rbrace\) is a group. The identity is \(1\) and the inverse is
+\begin{eqna}
+    (\theta_z,|z|)^{-1}=(-\theta_z,\tfrac{1}{|z|}).
+\end{eqna}
+
+These groups are commutative or abelian, meaning that \(a*b=b*a\). Commutativity of a group is not a theorem: there exists nonabelian groups. An important examples are rotation groups \(\mathrm{SO}(n)\) with \(n\geq3\). \(\mathrm{SO}(n)\) consists of maps \(R:\RR^n\rightarrow\RR^n\) which keep the distance of a point from the origin untouched and do not mirror.%Why is this noncommutative?
+
+The configuration of a physical object, for example a stone, can be described by a point in \(\RR^3\), which corresponds to location, and an element in \(\mathrm{SO}(3)\). Ignoring location, we chooose some reference stone and tell how much the actual stone has rotated with respect to the reference, which fixes the \(\mathrm{SO}(3)\).
+
+When we change the configuration of the stone---keeping it in hands while turning it in this way and that---we draw a path in \(\mathrm{SO}(3)\). Now we can ask an interesting question: is \(\mathrm{SO}(3)\) simply connected? A space being simply connected means that any loop can be continuously shrinked to a point. \(\RR^2\) is connected but \(\RR^2\setminus\lbrace0\rbrace\) is not, since a loop around the hole left by removing \(0\) cannot be shrinked.
+
+The question may sound difficult, but the answer can be found without rigor. The method is called Dirac's belt trick. A path in \(\mathrm{SO}(3)\) can be parameterised with a belt. We get a loop if both ends of the belt are in the same configuration. We can deform loops just moving the belt while keeping the ends in the same configuration (but not necessarily in the same locations).
+
+A unit path is a path which starts from the identity and does not rotate at all, in other words, a completely straight belt. Now, take the other end and rotate it by \(\tau\). Now you have a loop which starts from and ends at identity, but which does something in the middle. Try to deform that that into the identity. You'll find that you can't. \(\mathrm{SO}(3)\) is not simply connected.
+
+If you take the straight belt and you twist the other end by \(2n\tau\), then you can deform it into the identity. There are two sets of loops: those that can be deformed to the identity and those that cannot. The latter ones can be deformed into each other.
+
+This reasoning may not convince you perfectly. To be certain about the non-simply connectedness of \(\mathrm{SO}(3)\) requires rigor. Furthermore, finding simply connected \(\mathrm{SO}(n)\)'s also requires rigor.
+
+An \(\mathrm{SO}(3)\) rotation leaves \(S^2\) intact. There's a result called Banach-Tarski paradox according to whic \(S^2\) can be split into five parts and then construct from these pieces two whole \(S^2\)'s by just rotating the pieces, provided that we can always choose. This is highly counterintuitive result: doesn't rotation preserve area? How is it possible that splitting and rotating makes two out of one?
+
+A question from the beginning:
+\begin{quote}
+    Can we always choose?
+\end{quote}
+More precisely, if we have a collection of nonempty sets \(X_i\), is there always a function \(f\) such that \(f(i)\in X_i\), or in other words, is a Cartesina product of nonempty sets always nonempty?%is this chice function correct?
+
+It's tempting to answer yes. It seems obvious that choosing is always possible. Yet that assumption leads to absurd results like the Banach-Tarski paradox and well-ordering of any set. This question, together with the ``set'' of all sets, ordinal numbers and Russel's paradox motivates rigorous study of sets and leads to axiomatic set theory. So-called Axiom of Choice says that yes, we can always choose. It is an axiom, not a theorem.
+
+%For example, a bent sheet of metal satisfies the definition of a 2-dimensional Riemannian manifold, so we know that it's curvature at any point can be characterized with two real numbers, and that curvature satisfies the Bianchi identities.
+%do parallel lines continue to be parallel? parallel axiom. manifolds. results: curvature tensor, bianchi identities.
+% rigor is pointless if the math is intuitive or if the starting point is vague. Or if the question is boring and someone else has worked it out.
+
+%what's wrong with math and physics teaching
+
+%An observation: People don't write their insights down. I often get an idea, and after explaining it to others, I her, that's obvious, didn't you understand it already? I ask, why haven't you told it me! I write it down, and it's fucking perfect.
+
 
 \section{Some axiomatizations}
-
-
-Can we comb a hairy ball? No, there will be at least one cowlick-if the surface of the ball is two-dimensional, \(S^2\). Clearly we can comb \(S^1\). We can also imagine spheres of higher dimensionality. Which spheres we can comb, and which we can't? We need math. More precisely, we need topology and algebra.
-
-Is SO(3) simply connected? Parametrize a tau-rotation with a belt. You'll notice that you can't deform this parameterization (path) into the identity: SO(3) is not simply connected. Dirac's belt trick: the belt encodes information of how the buckle has been rotated into it's position. Electrons remember this??
 
 %\section{Mechanics}
 
@@ -647,7 +755,7 @@ algebraic topology
 
 \subsection{Axioms of classical mechanics}
 
-In the following \(\mathcal{M}\) is a differentiable manifold.
+In the following \(\mathcal{M}\) is a symplectic manifold.
 
 \begin{itemize}
     \item The state of the system is associated with a function \(\rho:\mathcal{M}\rightarrow\RR\) for which it holds that 
@@ -690,5 +798,104 @@ First observe that molecular phenomena seems random. Then write classical statis
 %tytyy mainita koordinaatit -> complete setti operaattoreita, ja muut observaabelit vanhojen funktioina, ja poisson bracket -> kommutaattori, ja karteesinen tulo -> tensoritulo
 
 %tarvitaan klassiset vastaavuudet koska limillä hbar -> 0 täytyy ilmestyy klassinen teoria
+
+\section{The halting problem}
+
+This little python program
+\begin{lstlisting}[language=python]
+print("I did halt.")
+\end{lstlisting}
+will halt by printing ``I did halt.'' on the screen.
+
+This
+\begin{lstlisting}
+i = 0
+while i < 1:
+    print("I'll never halt!")
+\end{lstlisting}
+does not halt, as it blusters.
+
+\begin{lstlisting}
+# pseudokoodia
+if John is at Joensuu:
+    ask him to check is my passport there.
+else:
+    travel to Joensuu
+    walk to Onnela
+    while passport has not been found:
+        search a room
+        move into another room
+print "passport"
+\end{lstlisting}
+\chapter{Building math}
+
+Thanks to efforts of mathematicians, most of math can be put on very solid grounds.
+
+Nowadays math has been put on very, very solid grounds.
+
+\section{Propositional logic}
+
+\section{Set theory}
+
+\section{Algebra}
+
+\section{Topology}
+
+Another elementary and important structure we can equip a set with is topology. It is a notion of nearness whitout distance which allows us to talk about convergence, which means approaching some point, and continuity of a function, which means that nearby points map to nearby points. Definition of topology is not very obvious, but the concept makes great intuitive sense. Topology captures that what is common with a torus and a coffee cup.
+
+Given a set \(X\), set \(\mathcal{T}\subset2^X\) is called a topology on \(X\) if
+\begin{itemize}
+    \item \(\emptyset\in\mathcal{T}\) and \(X\in\mathcal{T}\).
+    \item Any finite union of elements of \(\mathcal{T}\) is in \(\mathcal{T}\).
+    \item Any intersection of elements of \(\mathcal{T}\) is in \(\mathcal{T}\).
+\end{itemize}
+The pair \(\lbrace X,\mathcal{T}\rbrace\) is called a topological space and the elements of \(\mathcal{T}\) open sets of \(X\).
+
+A set \(\mathcal{B}\) of sets of \(X\) is called a basis of topology \(\mathcal{T}\) if all unions of elements of \(\mathcal{B}\) is equal to \(\mathcal{T}\). For example open intervals \(]a,b[\), \(a,b\in\RR\), form a basis and generate the usual topology and concept of nearness in \(\RR\). More generally, open balls generate the usual topology of \(\RR^n\).
+
+A sequence \(x_n\) of points in \(X\) is said to converge to point \(x\) if for any open neighborhood \(U\) of \(x\) there is \(n_U\) such that if \(n>n_U\), then \(x_n\in U\). For example \(1,\frac{1}{2},\frac{1}{4},\dotsc\) converges to \(0\) in \(\RR\)'s usual topology.
+
+A function \(f:X\rightarrow Y\) from a topological space to another is continuos if the preimage of an open set is open, that is, the set of all the points in \(X\) of which image is in an open set of \(Y\) is always open. Continuity means the function's value does not change abruptly.
+
+If a function is a bijection and continuous in both directions, it is a homeomorphism. Such a function preserves openness and topology. If there's a homeomorfism between two spaces, they're said to be homeomorphic, which means they are topologically similar. A cube and a ball are homeomorphic, a cube and a square aren't.
+
+% kaikkee shittii: tulotopologia yms
+
+A group is said to be a topological group if the group operation is continuous in some topology.
+
+An important topological space
+
+
+Of
+
+
+
+
+
+
+
+
+
+osdjfisjfds;lvsd sd vds  kjfd vj hvf kjd nnv kjds nvkjvnd s sd fd   df hfn nhgfn ngf gf gfnh   nf nncskj ds s 
+    
+
+\section{Analysis}
+
+
+
+
+\section{Geometry}
+
+\begin{eqna}
+    1,1,1,?,1,1,28,2,8,6,992,1,3,2,16256,2,16,16,523264,24,\dotsc\nonumber
+\end{eqna}
+
+
+
+
+
+
+
+
 
 \end{document}
