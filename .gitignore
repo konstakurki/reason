@@ -181,3 +181,6 @@ TSWLatexianTemp*
 
 # Vim
 *.swp
+
+# Python
+*.pyc

@@ -26,16 +26,24 @@
 
 \definecolor{listinggray}{gray}{0.9}
 \definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+
+\lstdefinelanguage{propositio}
+    {morekeywords={FoAl,Impl,Not,V,I,N,FA,Nt,Im},
+    sensitive=true,
+    breaklines=true,
+    breakatwhitespace=true,
+}
+
 \lstset{
-	language=python,
+	%language=python,
 	%backgroundcolor=\color{black},
     basicstyle=\small\ttfamily\color[HTML]{000000},
-    lineskip=1pt,
+    %lineskip=1pt,
     showstringspaces=false,
     keywordstyle=\color[HTML]{000080},
     commentstyle=\color[HTML]{006699},
-    stringstyle=\color[HTML]{830300},
-    identifierstyle=\color[HTML]{CC6600},
+    stringstyle=\color[HTML]{CC6600},
+    identifierstyle=\color[HTML]{830300},
     %frame=single,
     %frameround=tttt
 	%tabsize=4,
@@ -52,6 +60,10 @@
         %showspaces=false,
         %identifierstyle=\ttfamily,
 }
+
+
+
+
 % Book layout
 
 \setstocksize{8.6in}{6in}
@@ -86,6 +98,8 @@
 \newenvironment{eqna}{\begin{IEEEeqnarray}{c}}{\end{IEEEeqnarray}\ignorespacesafterend}
 \newenvironment{eqnb}{\begin{IEEEeqnarray}{cCl}}{\end{IEEEeqnarray}\ignorespacesafterend}
 \newtheorem{teoreema}{Theorem}
+\theoremstyle{definition}
+\newtheorem{maaritelma}{Definition}
 
 
 
@@ -103,6 +117,7 @@
 \newcommand{\ee}{\mathrm{e}}
 \newcommand{\ii}{\mathrm{i}}
 \DeclareMathOperator{\Tr}{Tr}
+\newcommand{\propositio}{\lstinline[language=propositio]}
 
 \begin{document}
 
@@ -118,7 +133,7 @@
 
 \vspace{0.3in}
 
-\noindent In progress---updated on August 29, 2016
+\noindent In progress---updated on August 30, 2016
 
 \vfill
 
@@ -131,7 +146,7 @@
 
 \vspace{0.18in}
 
-\noindent This book is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.\footnote{\url{https://creativecommons.org/licenses/by-sa/4.0/}} See the book webpage\footnote{\url{http://konstakurki.co/reason/}} for the source repository and the newest version and author's personal site\footnote{\url{http://konstakuri.co/}} for contact information.
+\noindent This book is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.\footnote{\url{https://creativecommons.org/licenses/by-sa/4.0/}} See the book webpage\footnote{\url{http://konstakurki.co/reason/}} for the source repository and the newest version and author's personal site\footnote{\url{http://konstakurki.co/}} for contact information.
 
 \newpage
 
@@ -295,9 +310,9 @@ This seems plausible: there's much more possibilities in choosing elements from 
 
 We can also show this more carefully. Let \(X\) be any set, finite or infinite, and take any function \(f:X\rightarrow 2^X\). Then form a set
 \begin{eqna}
-    Y=\lbrace x\in X: x\notin f(x)\rbrace.
+    D=\lbrace x\in X: x\notin f(x)\rbrace.
 \end{eqna}
-The notation on the right means ``all real numbers \(x\) such that \(x\) is not in \(f(x)\).'' Is there a \(x\in X\) so that \(f(x)=Y\)? If \(x\in f(x)\), then by the construction of \(Y\) we have \(x\notin Y\) and therefore \(f(x)\neq Y\), and if \(x\notin f(x)\), then by the construction of \(Y\) we have \(x\in Y\), so \(f(x)\neq Y\). In either case \(f(x)\neq Y\), so \(f\) is not a surjection.
+The notation on the right means ``all real numbers \(x\) such that \(x\) is not in \(f(x)\).'' Is there a \(x\in X\) so that \(f(x)=D\)? If \(x\in f(x)\), then by the construction of \(D\) we have \(x\notin D\) and therefore \(f(x)\neq D\), and if \(x\notin f(x)\), then by the construction of \(D\) we have \(x\in D\), so \(f(x)\neq D\). In either case \(f(x)\neq D\), so \(f\) is not a surjection.
 
 Since \(f\) was arbitrary, there's no surjection from \(X\) to \(2^X\), and so \(|X|<|2^X|\). We denote \(|2^X|\) by \(2^{|X|}\), which is in line with the corresponding result for finite sets.
 
@@ -624,7 +639,7 @@ We now have the countable sets \(\NN\), \(\ZZ\) and \(\QQ\) of cardinality \(\al
 
 \section{Rigor}
 
-Earlier in this chapter I used reasoning of variable rigorouseness. I explained Hausdorff dimension quickly and showed \(|X|<|2^X|\) somewhat carefully. How rigorous to be is always a tradeoff. More rigor and you get more solid results. Less rigor and you can tackle a wider set of problems. Another question from the beginning illustrates the point:
+Earlier in this chapter I used reasoning of variable rigorouseness. I explained Hausdorff dimension quickly and showed \(|X|<|2^X|\) somewhat carefully. It's always a tradeoff: more rigor and you get more solid results. Less rigor and you can tackle a wider set of problems. Another question from the beginning illustrates the point:
 \begin{quote}
     Is it possible to comb a hairy ball?
 \end{quote}
@@ -808,14 +823,14 @@ print("I did halt.")
 will halt by printing ``I did halt.'' on the screen.
 
 This
-\begin{lstlisting}
+\begin{lstlisting}[language=python]
 i = 0
 while i < 1:
     print("I'll never halt!")
 \end{lstlisting}
 does not halt, as it blusters.
 
-\begin{lstlisting}
+\begin{lstlisting}[language=python]
 # pseudokoodia
 if John is at Joensuu:
     ask him to check is my passport there.
@@ -827,13 +842,245 @@ else:
         move into another room
 print "passport"
 \end{lstlisting}
+sldfsd
+sdfsdf
+\begin{lstlisting}[language=propositio]
+FoAl Matilda -> not John
+V Matilda Not John
+
+c
+a
+>ac
+b
+a
+>ab
+>>ab>ac
+>bc
+>a>bc
+>>a>bc>>ab>ac
+
+Cindy
+Alice
+Impl Alice Cindy
+Boy
+Alice
+Impl Alice Boy
+Impl Impl Alice Boy Impl Alice Cindy
+Impl Boy Cindy
+Impl Alice Impl Boy Cindy
+Impl Impl Alice Impl Boy Cindy Impl Impl Alice Boy Impl Alice Cindy
+
+Cindy
+Alice
+I Alice Cindy
+Boy
+Alice
+I Alice Boy
+I I Alice Boy I Alice Cindy
+I Boy Cindy
+I Alice I Boy Cindy
+I I Alice I Boy Cindy I I Alice Boy I Alice Cindy
+
+(A > not C) > (notB > ForAll x P x)
+
+Im Im A Nt C Im Nt B FA x P x
+
+
+
+\end{lstlisting}
+Ding ding ding
+
+
 \chapter{Building math}
 
-Thanks to efforts of mathematicians, most of math can be put on very solid grounds.
+Russel's paradox and other absurdities drove mathematics in a foundational crisis about a cantury ago. Thanks to logicians and set theorists, the crisis has now largely been solved. I start now from the very bottomi and aim to be as rigorous as possible.
 
-Nowadays math has been put on very, very solid grounds.
+Immediately a question arises: how rigorous can we be? Many would say, ``as rigorous as we want, it's just a question of patience.'' But how can we be sure about that? Maybe wa can't be completely rigorous. Let's see how far we can get.
+
+\section{Empirical results}
+
+By the very definition of our task, we have nothing to begin with. No math, no logic, no god. To be honest, I don't know how to tackel the problem if it really is interpreted that strictly. \emph{Tyhjästä ei voi nyhjäistä}, as we say here in Finland.
+
+If a child was a \emph{tabula rasa}, he or she would not learn anything. But we people are born with a language instinct in our DNA. We are no tabula rasa. The same problem is encountered in the field of machine learning and artificial intelligence: there's no general learning algorith; an algorith must always be crafted for the task it'll be used for. The ``no free lunch theorem'' of computer science gives some rigor to this notion.
+
+Our \emph{tabula} has been written during millions of years of evolution of \emph{homo sapiens}. To get started, we must consider \emph{empirical data} of our very own thinking and try to model it. That's right: mathematics is not usually thought of as an empirical science, yet when we seek ultimate rigor, we need empirism?.
+
+Of course, every time we do math, we use experience and data sought from the surroundings and past. We just do it instinctively, without noticing. Now we will be very explicit.
+
+Think of a human being, say Jasmine, explaining some issue. That is our starting point. How does she do it? She talks, shows body language. It's all very vague, but we can strip off some less essential features of her presentation. It's a tradeoff: while we remove vagueness, the expressive power of the presentation goes down.
+
+So we strip off body language and tone of voice. We change spoken language to text. The expressive power is still good---I've had deep discussions with Jasmine via just e-mail---but we can now say something definite about Jasmine's presentation: it's a finite string \(s_n\) of symbols from a finite alphabet \(A\). There's infinitely many presentations, but they are countable. (why? must be shown) There's less possible presentations than there are real numbers.
+
+This reasoning is of course intuitive, informal, nonrigorous. It's metamathematics. We can't avoid it when seeking for rigorous foundations.
+
+Written english is still somewhat vague. let's formalize more: a presentation can be split into sentences, each of them stating something. If Jasmine cares enough about getting her point through, she collects her conclusions into a few sentence in the end of her presentation.
+
+Some terminology: if Jasmine reasoned correctly, her presentation is called a proof and her conclusions are a theorem. Since many sentences can be melted together, we can assume that a theorem is always a single sentence. A proof is useful to think of as a string of many sentences. Now the proof looks something like this:
+\begin{lstlisting}
+A sentence
+another sentence
+...
+one more sentence
+THEOREM
+\end{lstlisting}
+Proofs in mathematical literatures are exactly of this form.
+
+This is still a little vague. What is a sentence? We can single out some especially important words from a proof, for example \lstinline!if!, \lstinline!then! and \lstinline!not!.
 
 \section{Propositional logic}
+
+Propositional logic is a formal system of reasoning which goes back to ancient Greece. In propositional logic we have some statements of fact (or fiction) like \lstinline!Frege_is_a_human!, and words like \lstinline!implies!, \lstinline!not!, \lstinline!and! and \lstinline!or!.
+
+In set theory we might say something like this.
+\begin{quote}
+    If \(x\) is in \(A\) always means that \(x\) is not in \(B\), then \(A\) and \(B\) are disjoint.
+\end{quote}%vai tarvitanks tähän jo predikaattilogiikkaa?
+
+
+ We could write for example the sentence
+\begin{lstlisting}
+(x_is_in_A implies not x_is_in_B) implies
+    A_and_B_are_disjoint
+\end{lstlisting}
+The indentation on the second line means there's actually only one line and one sentence which just couldn't fit on the page.
+
+We don't need all the words I listed---some can be expressed in terms of others. My choice is \lstinline!not! and \lstinline!implies! which I'll shorten to \lstinline[language=propositio]!N! and \lstinline[language=propositio]!I!. These are functionally complete\footnote{\url{https://en.wikipedia.org/wiki/Functional_completeness\#Minimal_functionally_complete_operator_sets}} as we'll see soon?. Actually, \lstinline!not_and! would solely be functionally complete, but using it it would make the theory a little more obscure.
+
+For syntactical simplicity, let's not use parenthesis. Instead, let's write
+\begin{lstlisting}[language=propositio]
+I I x_is_in_A N x_is_in_B A_and_B_are_disjoint
+\end{lstlisting}
+This is unambiguous, because each \lstinline[language=propositio]!I! is followed by exactly two sentences and each \lstinline[language=propositio]!I! by exactly one sentence.
+
+To be precise:
+\begin{maaritelma}
+A word of propositional logic is a finite, non-empty string of symbols from the alphabet
+\begin{lstlisting}
+abcdefghijklmnopqrstuvwxyz
+ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_
+\end{lstlisting}
+not including the carriage return or space, which is not \lstinline[language=propositio]!I! or \lstinline[language=propositio]!N!.
+\end{maaritelma}% there are countably infinite number of finite strings of symbols, and there for equally much sentences.
+\begin{maaritelma}
+A sentence of propositional logic is a finite string for which one of the following three conditions holds:
+\begin{enumerate}
+    \item It is a word
+    \item It consists of \lstinline[language=propositio]!N!, a space and a sentence in that order
+    \item It consists of \lstinline[language=propositio]!I!, a space, a sentence, a space and another sentence in that order.
+\end{enumerate}
+\end{maaritelma}
+Precision is important because it allows us to let computers verufy things. This Python script verifies if sds is a sentence:
+and 
+
+%\lstinputlisting[language=python,basicstyle=\footnotesize\ttfamily]{scripts/is_a_sentence.py}
+
+%the definition points to itself, but that' no problem since the sring is finite. Its called recursion.
+
+Now we have defined a sentence of propositional logice rigorously, so rigorously that even a computer may get it. Now some informal notation to make life easier. We use small letters to denote words and capital letters to denote sentences.
+
+We write
+\begin{eqna}
+    C=A\rightarrow B
+\end{eqna}
+if \(C\) is of the form \lstinline[language=propositio]!I <A> <B>!, in which \lstinline[language=propositio]!<A>! denotes the sentence \(A\) and \lstinline[language=propositio]!<B>! the sentence \(B\). If for example \(A\) denotes \lstinline[language=propositio]!Alice! and \(B\) denotes \lstinline[language=propositio]!Bob!, \(A\rightarrow B\) denotes
+\begin{lstlisting}[language=propositio]
+I Alice Bob
+\end{lstlisting}
+. It reads ``\(A\) implies \(B\)'', which is clear from our construction. Similarly we write \(B=\neg A\) if \(B\) is of the form \lstinline[language=propositio]!N <A>!. It reads ``not \(A\).
+
+We also write
+\begin{eqna}
+    \neg A\rightarrow B=A\vee B
+\end{eqna}
+which reads ``\(A\) or \(B\)'' and means \lstinline[language=propositio]!I N <A> <B>!, and
+\begin{eqna}
+    \neg(\neg A\vee\neg B)=A\wedge B,
+\end{eqna}
+which reads ``\(A\) and \(B\)'' and means \lstinline[language=propositio]!N I N <A> N <B>!, and
+\begin{eqna}
+    (A\rightarrow B)\wedge(B\rightarrow A)=A\leftrightarrow B,
+\end{eqna}
+which reads ``\(A\) is equivalent to \(B\)'' and means
+\begin{lstlisting}[language=propositio]
+N I N I <A> <B> I <B> <A>
+\end{lstlisting}
+. Interpretations as ``or'', ``and'' and ``is equivalent to'' will be justified later.
+
+Now we can translate an English sentence into our propositional language.
+\begin{quote}
+    If Python is elegant or easy, people like it, and vice versa.
+\end{quote}
+Let's use \(A\)=\lstinline[language=propositio]!A! to mean the statement ``Python is elegant'', \(B\)=\lstinline[language=propositio]!B! to mean ``Python is easy'' and \(C\)=\lstinline[language=propositio]!C! to mean ``people like Python''. Then we have ``if \(A\) or \(B\), then \(C\), and vice versa``, or in informal symbols,
+\begin{eqna}
+    (A\vee B)\leftrightarrow C.
+\end{eqna}
+Writing \(D=A\vee B\), we have
+\begin{lstlisting}[language=propositio]
+N I N I <D> C I C <D>
+\end{lstlisting}
+, and since \(D\) means \lstinline[language=propositio]!I N A B!, the whole sentence becomes
+\begin{lstlisting}[language=propositio]
+N I N I I N A B C I C I N A B
+\end{lstlisting}
+.
+
+Now that we can translate English into propositional logic sentences, we can tackle reasoning. When Jasmine presents her arguments, she first presents some asusmptions and then deduces lemmas out of them. She may provide more assumptions as the presentation goes on. Then she deduces more lemmas of assumptions and already proved lemmas finally arriving at her theorem. Therefore, a proof should be a sequence of sentences, each of them an assumption or a deduction based on earlier sentences in the proof.
+
+The simplest deduction based on earlier results is that there's a sentence saying \(A\) holds, and another sentence saying that if \(A\), then \(B\). It is called Modus Ponens and it is the only deduction rule in proposition logic.
+
+Our proof therefore stems from a set of assumptions \(A\) and is a sequence of sentences \(P_n\) such that each \(P_n\) is either an assumption or there's \(B\rightarrow P_k\) and \(B\) somewhere earlier in the proof.
+
+\begin{maaritelma}
+Let \(A\) be a set of sentences called assumptions. A proof from assumptions \(A\) is a finite string of symbols which consists of a concatention of sentences \(P_k\) separated with newline characters such that each \(P_k\in A\) or there is \(l,m<k\) such that \(P_l=\)\lstinline[language=propositio]!I <P_m> <P_k>!.
+\end{maaritelma}
+If a sentence \(X\) can be proven from assumptions \(A\), we write \(\vdash_AX\). For example, if we assume \propositio!I it_rains you_get_wet! and \propositio!it_rains!, we can form a simple proof
+\begin{lstlisting}[language=propositio]
+I it_rains you_get_wet
+it_rains
+you_get_wet
+\end{lstlisting}
+.
+
+Some sentences seem to be universally valid, for example
+\begin{eqna}
+    \neg\neg A\rightarrow A
+\end{eqna} for any sentence \(A\). It seems reasonable to expect that we can always assume any sentence of this form. We therefore put all such sentences in a special set of assumptions called axioms. For example
+\begin{lstlisting}[language=propositio]
+I N N pimpeli_pom pimpeli_pom
+\end{lstlisting}
+is an axiom.
+
+
+
+Now, reasoning 
+
+
+k
+
+Now we can transform this 
+
+
+
+
+
+
+
+
+
+%We give up on expressing emotions, for example.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \section{Set theory}
 
@@ -868,6 +1115,12 @@ An important topological space
 
 Of
 
+%algebraic structures: group, field, vector space, operator algebra, Clifford algebra, Grassman algebra
+%topologies: R^n, manifold
+%important combinations: group + differential manifold = Lie group, vector space + inner product + completeness = Hilbert space, differentiable manifold + metric tensor = Riemannian manifold
+%tangent space: local dx's, Lie algebra
+
+%maps: derivative: R^R->R^R, integral:R^X->R
 
 
 
@@ -875,8 +1128,7 @@ Of
 
 
 
-
-osdjfisjfds;lvsd sd vds  kjfd vj hvf kjd nnv kjds nvkjvnd s sd fd   df hfn nhgfn ngf gf gfnh   nf nncskj ds s 
+%osdjfisjfds;lvsd sd vds  kjfd vj hvf kjd nnv kjds nvkjvnd s sd fd   df hfn nhgfn ngf gf gfnh   nf nncskj ds s 
     
 
 \section{Analysis}
