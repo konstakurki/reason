@@ -103,8 +103,9 @@
 % Custom environments
 
 \newenvironment{eqna}{\begin{IEEEeqnarray}{c}}{\end{IEEEeqnarray}\ignorespacesafterend}
-\newenvironment{eqnb}{\begin{IEEEeqnarray}{cCl}}{\end{IEEEeqnarray}\ignorespacesafterend}
+\newenvironment{eqnb}{\begin{IEEEeqnarray}{rCl}}{\end{IEEEeqnarray}\ignorespacesafterend}
 \newtheorem{teoreema}{Theorem}
+\newtheorem{lemma}{Lemma}
 \theoremstyle{definition}
 \newtheorem{maaritelma}{Definition}
 
@@ -141,7 +142,7 @@
 
 \vspace{0.3in}
 
-\noindent In progress---updated on August 31, 2016
+\noindent In progress---updated on September 1, 2016
 
 \vfill
 
@@ -275,6 +276,8 @@ The road will be long and difficult. Populism isn’t of help here—we need to 
 %Näihin kysymyksiin aukottomasti tai edes jokseenkin vakuuttavasti ei ole helppoa. Mahdollista se kuitenkin on.
 %
 \end{comment}
+
+\part{Building math}
 
 \chapter{Numbers}
 
@@ -822,7 +825,7 @@ First observe that molecular phenomena seems random. Then write classical statis
 
 %tarvitaan klassiset vastaavuudet koska limillä hbar -> 0 täytyy ilmestyy klassinen teoria
 
-\chapter{Building math}
+\chapter{A quest for ultimate rigor}
 
 Russel's paradox and other absurdities drove mathematics in a foundational crisis about a cantury ago. Thanks to logicians and set theorists, the crisis has now largely been solved. I start now from the very bottomi and aim to be as rigorous as possible.
 
@@ -847,152 +850,116 @@ This reasoning is of course intuitive, informal, nonrigorous. It's metamathemati
 Written english is still somewhat vague. let's formalize more: a presentation can be split into sentences, each of them stating something. If Jasmine cares enough about getting her point through, she collects her conclusions into a few sentence in the end of her presentation.
 
 Some terminology: if Jasmine reasoned correctly, her presentation is called a proof and her conclusions are a theorem. Since many sentences can be melted together, we can assume that a theorem is always a single sentence. A proof is useful to think of as a string of many sentences. Now the proof looks something like this:
-\begin{lstlisting}
-A sentence
-another sentence
-...
-one more sentence
-THEOREM
-\end{lstlisting}
-Proofs in mathematical literatures are exactly of this form.
-
-This is still a little vague. What is a sentence? We can single out some especially important words from a proof, for example \lstinline!if!, \lstinline!then! and \lstinline!not!.
-
-\section{Propositional logic}
-
-Propositional logic is a formal system of reasoning which goes back to ancient Greece. In propositional logic we have some statements of fact (or fiction) like \lstinline!Frege_is_a_human!, and words like \lstinline!implies!, \lstinline!not!, \lstinline!and! and \lstinline!or!.
-
-In set theory we might say something like this.
+%\begin{lstlisting}
+%A sentence
+%another sentence
+%...
+%one more sentence
+%THEOREM
+%\end{lstlisting}
 \begin{quote}
-    If \(x\) is in \(A\) always means that \(x\) is not in \(B\), then \(A\) and \(B\) are disjoint.
-\end{quote}%vai tarvitanks tähän jo predikaattilogiikkaa?
+A sentence. Another sentence. Third sentence! \ldots One more sentence. The theorem.
+\end{quote}
+Indeed, proofs in mathematical literatures are exactly of this form.
 
+This is still a little vague. What is a sentence? How to correctly deduce more sentences?% We can single out some especially important words from a proof, for example \lstinline!if!, \lstinline!then! and \lstinline!not!.
 
- We could write for example the sentence
-\begin{lstlisting}
-(x_is_in_A implies not x_is_in_B) implies
-    A_and_B_are_disjoint
-\end{lstlisting}
-The indentation on the second line means there's actually only one line and one sentence which just couldn't fit on the page.
+\section{Zeroth-order logic}
 
-We don't need all the words I listed---some can be expressed in terms of others. My choice is \lstinline!not! and \lstinline!implies! which I'll shorten to \lstinline[language=propositio]!N! and \lstinline[language=propositio]!I!. These are functionally complete\footnote{\url{https://en.wikipedia.org/wiki/Functional_completeness\#Minimal_functionally_complete_operator_sets}} as we'll see soon?. Actually, \lstinline!not_and! would solely be functionally complete, but using it it would make the theory a little more obscure.
+Zeroth-order logic, or propositional calculus, is a formal system of reasoning which goes back to ancient Greece. In zeroth-order logic models logical relations between propositions ``Gödel was nuts'' and ``all fruits are green'' expressed by words like ``and'', ``or'' and ``not''. We could also have other things like functions and relations, but let's not consider them.
 
-For syntactical simplicity, let's not use parenthesis. Instead, let's write
-\begin{lstlisting}[language=propositio]
-I I x_is_in_A N x_is_in_B A_and_B_are_disjoint
-\end{lstlisting}
-This is unambiguous, because each \lstinline[language=propositio]!I! is followed by exactly two sentences and each \lstinline[language=propositio]!I! by exactly one sentence.
+%It is astonishingly little symbols that are needed for that. We need symbols \(A,B,C\cdots\) to express propositions. Let's think there's a countably infinite number of them, although the Latin alphabet only has 26 letters. We will not need more, so it will not be a practical problem.
 
-To be precise:
+It is astonishingly little symbols that are needed for that. Let's take \(\NN\) to denote propositions and \(\uparrow\) to denote ``not both''. That's it! We don't need distinct symbols for ``and'', ``or'' and so on, because as we'll soon see, we can express them by using \(\uparrow\).
+
+We could use infix notation and write formulas like
+\begin{eqna}
+    (1\uparrow0)\uparrow((3\uparrow8)\uparrow4),
+\end{eqna} 
+but we don't parenthesis if we write \(\uparrow12\) instead of \(1\uparrow2\). This Polish prefix notation is unambiguous because each \(\uparrow\) eats exactly two formulas.% We'll show this carefully soon.
 \begin{maaritelma}
-A word of propositional logic is a finite, non-empty string of symbols from the alphabet
-\begin{lstlisting}
-abcdefghijklmnopqrstuvwxyz
-ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_
-\end{lstlisting}
-not including the carriage return or space, which is not \lstinline[language=propositio]!I! or \lstinline[language=propositio]!N!.
-\end{maaritelma}% there are countably infinite number of finite strings of symbols, and there for equally much sentences.
-\begin{maaritelma}
-A sentence of propositional logic is a finite string for which one of the following three conditions holds:
-\begin{enumerate}
-    \item It is a word
-    \item It consists of \lstinline[language=propositio]!N!, a space and a sentence in that order
-    \item It consists of \lstinline[language=propositio]!I!, a space, a sentence, a space and another sentence in that order.
-\end{enumerate}
+A formula of propositional calculus is a finite, non-empty sequence of elements from \(\NN\cup\lbrace\uparrow\rbrace\) which is either a single number or \(\uparrow\) followed by two formulas. A subformula of formula \(\psi\) is a formula which is part of \(\psi\).
 \end{maaritelma}
-Sentences are finite strings of symbols from a countable alphabet. We can assign a number \(n\in\NN\) to any such string \(S_i\) by the following procedure:
-\begin{enumerate}
-    \item Turn the string \(S_i\) of symbols into a string \(\tilde{S}_i\) of natural numbers by changing each symbol to its place in the alphabet. In alphabet \((a,b,c,\dotsc)\) symbol \(a\) would be changed to \(1\), \(b\) to \(2\) and so on.
-    \item Take the sequence of prime numbers \(2,3,5,7,11,\dotsc\) and form the number
-        \begin{eqna}
-            2^{\tilde{S}_0}\cdot3^{\tilde{S}_1}\cdot5^{\tilde{S}_2}\cdot7^{\tilde{S}_3}\cdot11^{\tilde{S}_4}\cdot\dotsb
-        \end{eqna}
-\end{enumerate}
-This is called Gödel numbering. Since prime number factorization of each \(n\in\NN\), no no two strings map to the same number. In other words, Gödel numbering provides an injection fron the set of finites strings to \(\NN\).
-
-Therefore, there is a countably number of finite strings of symbols provided that the alphabet is countable. There is countably many words and sentences in propositional logic and there is countably many possibilities in writing a book.
-
-%Precision is important because it allows us to let computers verufy things. This Python script verifies if sds is a sentence:
-%and 
-%
-%
-%%the definition points to itself, but that' no problem since the sring is finite. Its called recursion.
-
-W have defined a sentence of propositional logice rigorously, so rigorously that even a computer may get it. Now some informal notation to make life easier. We use small letters to denote words and capital letters to denote sentences.
-
-We write
+Our example formalised to the extreme is the sequence
 \begin{eqna}
-    C=A\rightarrow B
+    \uparrow,\uparrow,1,0,\uparrow,\uparrow,3,8,4.
 \end{eqna}
-if \(C\) is of the form \lstinline[language=propositio]!I <A> <B>!, in which \lstinline[language=propositio]!<A>! denotes the sentence \(A\) and \lstinline[language=propositio]!<B>! the sentence \(B\). If for example \(A\) denotes \lstinline[language=propositio]!Alice! and \(B\) denotes \lstinline[language=propositio]!Bob!, \(A\rightarrow B\) denotes
-\begin{lstlisting}[language=propositio]
-I Alice Bob
-\end{lstlisting}
-. It reads ``\(A\) implies \(B\)'', which is clear from our construction. Similarly we write \(B=\neg A\) if \(B\) is of the form \lstinline[language=propositio]!N <A>!. It reads ``not \(A\).
+\begin{lemma}[Unique readability]
+Decomposition of a formula into subformulas is unique.
+\end{lemma}
+\begin{proof}
+If formula \(\psi\) is only a number, then the decomposition is \(\psi\). Otherwise note that a proper initial segment of a formula is not a formula. jlsdjlkc
+\end{proof}
+If only finite alphabet is available as is in a computer environment, then we can create an effective infinite alphabet by using words instead of single letters. The extreme is of course words formed out of binary alphabet \(\lbrace0,1\rbrace\) in such away that even if concatenated, the words can be told apart. Then our formulas would be nothing but finite strings of zeroes and ones.
 
-We also write
+In any case formulas are finite sequences of symbols from a countable alphabet. We can assign a number \(n\in\NN\) to any formula by the following procedure. First map the alphabet to positive natural numbers \(\NN^+\), for example \((\uparrow,0,1,2,3,\dotsc)\mapsto(1,2,3,4,5,\dotsc)\). Our example formula would become \(1,1,3,2,1,1,5,10,6\). Then map the sequence  by taking the \(n\)th symbol to the \(n\)th prime number exponentiated to the power of \(n\)th symbol. In our example that would be
 \begin{eqna}
-    \neg A\rightarrow B=A\vee B
+    2^1,3^1,5^3,7^2,11^1,13^1,17^5,19^{10},23^6.
 \end{eqna}
-which reads ``\(A\) or \(B\)'' and means \lstinline[language=propositio]!I N <A> <B>!, and
+Then multiply the numbers together. In our example we get
 \begin{eqna}
-    \neg(\neg A\vee\neg B)=A\wedge B,
+    6772375242492923775204255946433250.
 \end{eqna}
-which reads ``\(A\) and \(B\)'' and means \lstinline[language=propositio]!N I N <A> N <B>!, and
+
+This is called Gödel numbering. It is not unique; we can map the alphabet to \(\NN^+\) in any injective way we wish. Since prime number factorization of each \(n\in\NN\) is unique, no two strings map to the same number. In other words, Gödel numbering provides an injection from the set of formulas to \(\NN\).
+\begin{lemma}
+Given a countable alphabet \(A\), the set of finite sequences of symbols of \(A\) is countably infinite.
+\end{lemma}
+\begin{proof}
+Gödel numbering provides an injection to \(\NN\), so the set is countable. There are infinite many possible lengths for a sequence, so the set is infinite.
+\end{proof}
+If you're about to write a book, you only have countably many possibilities.
+
+Our formal syntax is very inconvenient to use. Let's take some informal notation to abbreviate it. We use Greek letters \(\psi,\varphi,\phi,\dotsc\) to denote formulas. We also use infix notation with enough parenthesis to make the expression unambiguous. We use the following abbreviatons:
 \begin{eqna}
-    (A\rightarrow B)\wedge(B\rightarrow A)=A\leftrightarrow B,
+    {\psi\uparrow\psi}=\neg\psi,\nonumber\\
+    (\psi\uparrow\xi)\uparrow(\psi\uparrow\xi)=\psi\wedge\xi,\nonumber\\
+    (\psi\uparrow\psi)\uparrow(\xi\uparrow\xi)=\psi\vee\xi,\nonumber\\
+    \psi\uparrow(\xi\uparrow\xi)=\psi\rightarrow\xi\nonumber
 \end{eqna}
-which reads ``\(A\) is equivalent to \(B\)'' and means
-\begin{lstlisting}[language=propositio]
-N I N I <A> <B> I <B> <A>
-\end{lstlisting}
-. Interpretations as ``or'', ``and'' and ``is equivalent to'' will be justified later.
+and
+\begin{eqna}
+    (\psi\rightarrow\xi)\wedge(\xi\rightarrow\psi)=\psi\leftrightarrow\xi.\nonumber
+\end{eqna}
+The symbols \(\neg,\wedge,\vee,\rightarrow\) and \(\leftrightarrow\) read ``not'', ``and'', ``or'', ``implies'' and ``if and only if''. We'll see that these interpretations make sense. The need of parentheses is diminished by the convention that \(\neg\) affetcs to only what is right next to it, that is, \(\neg\psi=(\neg\psi\), and that \(\leftrightarrow\) affects as far as it can, which is the opposite of as it is with \(\neg\).
 
 Now we can translate an English sentence into our propositional language.
 \begin{quote}
-    If Python is elegant or easy, people like it, and vice versa.
+    If Python is elegant or easy, people will like it, and vice versa.
 \end{quote}
-Let's use \(A\)=\lstinline[language=propositio]!A! to mean the statement ``Python is elegant'', \(B\)=\lstinline[language=propositio]!B! to mean ``Python is easy'' and \(C\)=\lstinline[language=propositio]!C! to mean ``people like Python''. Then we have ``if \(A\) or \(B\), then \(C\), and vice versa``, or in informal symbols,
-\begin{eqna}
-    (A\vee B)\leftrightarrow C.
-\end{eqna}
-Writing \(D=A\vee B\), we have
-\begin{lstlisting}[language=propositio]
-N I N I <D> C I C <D>
-\end{lstlisting}
-, and since \(D\) means \lstinline[language=propositio]!I N A B!, the whole sentence becomes
-\begin{lstlisting}[language=propositio]
-N I N I I N A B C I C I N A B
-\end{lstlisting}
-.
+Let's use \(1\) to denote the statement ``Python is elegant'', \(2\) to denote ``Python is easy'' and \(3\) to denote ``people like Python''. Then we have \(\psi=\) ``if \(1\) or \(2\), then \(3\), and vice versa``, or using symbols,
+\begin{eqnb}
+    \psi&=&(1\vee 2)\leftrightarrow 3\nonumber\\
+    &=&((1\uparrow1)\uparrow(2\uparrow2))\leftrightarrow3\nonumber\\
+    &=&[((1\uparrow1)\uparrow(2\uparrow2))\rightarrow3]\wedge[3\rightarrow((1\uparrow1)\uparrow(2\uparrow2))]\nonumber\\
+    &=&[((1\uparrow1)\uparrow(2\uparrow2))\uparrow(3\uparrow3)]\;\wedge\nonumber\\
+    &&[3\uparrow[((1\uparrow1)\uparrow(2\uparrow2))\uparrow((1\uparrow1)\uparrow(2\uparrow2))]]\nonumber\\
+    &=&\lbrace[((1\uparrow1)\uparrow(2\uparrow2))\uparrow(3\uparrow3)]\;\uparrow\nonumber\\
+    &&[3\uparrow[((1\uparrow1)\uparrow(2\uparrow2))\uparrow((1\uparrow1)\uparrow(2\uparrow2))]]\rbrace\uparrow\nonumber\\
+    &&\lbrace[3\uparrow[((1\uparrow1)\uparrow(2\uparrow2))\uparrow((1\uparrow1)\uparrow(2\uparrow2))]]\uparrow\nonumber\\
+    &&[((1\uparrow1)\uparrow(2\uparrow2))\uparrow(3\uparrow3)]\rbrace\nonumber
+\end{eqnb}
+which finally becomes (omitting commas) the sequence
+\begin{eqnb}
+    \psi&=&\uparrow\uparrow\uparrow\uparrow\uparrow11\uparrow22\uparrow33\uparrow3\uparrow\uparrow\uparrow11\uparrow22\uparrow\uparrow11\uparrow22\nonumber\\
+    &&\uparrow\uparrow3\uparrow\uparrow\uparrow11\uparrow22\uparrow\uparrow11\uparrow22\uparrow\uparrow\uparrow11\uparrow22\uparrow33.\nonumber
+\end{eqnb}
+Tedious, but possible. (I don't know why I bothered to do that. It's 3.20 AM and I'm definitely not sure it's right. Anyway, it took me so long that I'm not going to take it away. Yeah, the fallacy of sunk costs.)
 
-Now that we can translate English into propositional logic sentences, we can tackle reasoning. When Jasmine presents her arguments, she first presents some asusmptions and then deduces lemmas out of them. She may provide more assumptions as the presentation goes on. Then she deduces more lemmas of assumptions and already proved lemmas finally arriving at her theorem. Therefore, a proof should be a sequence of sentences, each of them an assumption or a deduction based on earlier sentences in the proof.
+Now that we can translate English into zeroth-order logic formulas, we can tackle reasoning. When Jasmine presents her arguments, she first presents some assumptions and then deduces lemmas out of them. She may provide more assumptions as the presentation goes on. Then she deduces more lemmas out of assumptions and already proved lemmas finally arriving at her theorem.
 
-The simplest deduction based on earlier results is that there's a sentence saying \(A\) holds, and another sentence saying that if \(A\), then \(B\). It is called Modus Ponens and it is the only deduction rule in proposition logic.
+Therefore a formal proof should be a sequence of formulas, each of them being an assumption or a deduction based on earlier formulas in the proof. The stereotypical deduction based on earlier results is that there's a result saying \(\psi\) holds and another result saying that \(\psi\) implies \(\varphi\). It's called Modus Ponens.
 
-Our proof therefore stems from a set of assumptions \(A\) and is a sequence of sentences \(P_n\) such that each \(P_n\) is either an assumption or there's \(B\rightarrow P_k\) and \(B\) somewhere earlier in the proof.
+Our proof therefore stems from a set of assumptions and is a sequence of sentences \(\psi_n\) such that each \(\psi_n\) is either an assumption or there's \(\varphi\rightarrow \psi_n\) and \(\varphi\) somewhere earlier in the proof.
 
-Some sentences, for example \propositio!I N N it_rains it_rains! which means ``if it does not hold that it doesn't rain, it rains,'' seem to be universally valid. It's useful to form a special set of some such  sentences, called axioms, which we will implicitly assume. We'll figure out which sentences are useful to take as axioms later.% except in fuzzy situations (fuzzy logic)
+Some formulas, for example \(\neg\neg1\rightarrow1\) which says ``if it is not that proposition \(1\) does not hold, then it holds,'' seem to be universally valid. We choose some of such formulas as logical axioms, which we can always assume. We later discuss how to choose them.% except in fuzzy situations (fuzzy logic)
 
 \begin{maaritelma}
-A proof is a finite string of symbols which consists of a concatention of sentences \(P_n\) separated with newline characters such that each \(P_n\) is an axiom or there is \(l,m<n\) such that \(P_l=\)\lstinline[language=propositio]!I <P_m> <P_n>!.
+A proof from assumptions \(A\) is a finite sequence of formulas \(\psi_n\) such that each \(\psi_n\) is a logical axiom or an assumption from \(A\), or there are \(l,m<n\) such that \(\psi_l=\psi_m\rightarrow \psi_n\).
 \end{maaritelma}
 \begin{maaritelma}
-Let \(A\) be a set of assumption sentences. A proof from assumptions \(A\) is a finite string of symbols which consists of a concatention of sentences \(P_n\) separated with newline characters such that each \(P_n\in A\), \(P_n\) is an axiom,  or there is \(l,m<n\) such that \(P_l=\)\lstinline[language=propositio]!I <P_m> <P_n>!.
+A formula \(\psi\) is said to be a theorem if there is a proof \(\psi_n\) such that \(\psi=\psi_n\) for some \(n\). If that is the case, we write \(\vdash\psi\). If \(\psi\) can be proven from assumptions \(A\), we write \(\vdash_A\psi\).
 \end{maaritelma}
-\begin{maaritelma}
-A theorem is a sentence for which there is a proof \(P_n\) such that \(X=P_k\) for some \(k\in\NN\). If \(X\) is a theorem, we write \(\vdash X\).
-\end{maaritelma}
-If a sentence \(X\) can be proven from assumptions \(A\), we write \(\vdash_A X\).
-%
-%If a sentence \(X\) can be proven from assumptions \(A\), we write \(\vdash_AX\). For example, if we assume \propositio!I it_rains you_get_wet! and \propositio!it_rains!, we can form a simple proof
-%\begin{lstlisting}[language=propositio]
-%I it_rains you_get_wet
-%it_rains
-%you_get_wet
-%\end{lstlisting}
-%.
-%
 
 %Now the formal syntax is complete: we have rigorous definitions for a sentences and a proof. They are so rigorous that a computer can get them: I wrote a Python program\footnote{linkki} that checks if a string of symbols is a proof. It checks everything: that words are formed well, that sentenced are formed well, and that each line of proof is an instance of an axiom or Modus Ponens.
 %\lstinputlisting[language=python,basicstyle=\footnotesize\ttfamily]{scripts/checkproof.py}
@@ -1000,7 +967,7 @@ If a sentence \(X\) can be proven from assumptions \(A\), we write \(\vdash_A X\
 \section{Interpreting our system}
 %forall = V , is an element of = K, variable = word with capital letter, constant = word with xmall letter
 
-Now we have two languages for presenting reasoning: English and predicate logic. The first can be used for explaining virtually anything, but it is also vague: a computer cannot be programmed to unambiguously decide if an English sentence is syntactically correct, nor if reasoning written in English is sensible. Propositional logic can't express much things, but at least a computer can decide the correctness of a sentence and a proof?.
+Now we have two languages for presenting reasoning, English and zeroth-order logic. The first can be used for explaining virtually anything, but it's also vague: a computer cannot be programmed to unambiguously decide if an English sentence is syntactically correct, nor if reasoning written in English is sensible. Propositional logic can't express much things, but at least a computer can decide the correctness of a sentence and a proof?.
 
 If a ``\(1\) or \(0\)'' type question is well-defined doesn't necessarily mean a computer can decide if it's \(1\) or \(0\). There for example may not be skilled enough programmer available, but there's more to it.
 
@@ -1061,79 +1028,61 @@ is strictly speaking not a theorem; rather, it is a scheme for forming theorems 
 
 The problem is that propositional logic can't say ``for all such and such\ldots''. We'll fix this when we graduate to predicate logic. Anyway, propositional logic definitely gets something right, and it will be a part of predicate logic, so let's discuss semantics of propositional logic.
 
-Semantics is how we interpret each sentence and its truth. The negation \(\neg\) is easy: if \(A\) is true, then \(\neg A\) is not true and vice versa. The implication \(\rightarrow\) makes sense, if we choose
-\begin{eqnb}
-    \text{false}\rightarrow\text{false}=\text{true},\quad\text{false}\rightarrow\text{true}&=&\text{true},\nonumber\\
-    \text{true}\rightarrow\text{false}=\text{false},\quad\text{true}\rightarrow\text{true}&=&\text{true}.\nonumber
-\end{eqnb}
-This is the only choice which does not violate interpreting \(A\rightarrow B\) as ``\(B\) holds at least always when \(A\) does so.''
-
-Then we can define the truth value of any sentence recursively, until we hit a sentence which is just a word. At this point we must assign a truth value to all these words. That depends on the situation in the world: \propositio!it_rains! is true if it rains, and false if it doesn't. Therefore to each world situation we assign a function which tells the truth value of each word.
+Semantics is how we interpret each formula and its truth. In our zeroth-order logic the task is easy: \(\uparrow\) is false if both of its inputs are true. That's what ``not both'' means. Then we can define the truth value of any sentence recursively, until we hit a sentence which is just a number. At this point we must assign a truth value to all numbers. That depends on the situation in the world: if \(1\) denotes the proposition ``it rains'', then \(1\) is true if it rains, and false if it doesn't. Therefore to each world situation we assign a function \(m:\NN\rightarrow\lbrace\text{false},\text{true}\rbrace\).
 
 \begin{maaritelma}
-Let
-\begin{eqna}
-    f:\lbrace x:x\:\text{is a word}\rbrace\rightarrow\lbrace\text{false},\text{true}\rbrace
-\end{eqna}
-be a world situation and \(X\) a sentence. If \(X\) is a word, then its truth value is \(f(X)\). If \(X\) is \(\neg Y\) for some sentence \(Y\), then \(X\) is false if \(Y\) is true and vice versa. If \(X=A\rightarrow B\) for some sentences \(A\) and \(B\), then if \(A\) is true and \(B\) is false, \(X\) is false. Otherwise \(X\) is true.
+Let \(m\) be a world situation and \(\psi\) a formula. If \(\psi\) is a word, then its truth value is \(m(\psi)\). If \(\psi=\alpha\uparrow\beta\) for some formlas \(\alpha\) and \(\beta\), then if both \(\alpha\) and \(\beta\) are true, \(\psi\) is false. Otherwise \(\psi\) is true.
 \end{maaritelma}
-Some sentences, for example \(A\rightarrow A\), are true, no matter what the world situation is. Such sentences represent logically valid, universal sentences.
+Due to unique readability this is sensible recursive definition. We can now understand \(\neg,\wedge,\vee\) and \(\leftrightarrow\) as ``not'', ``and'', ``or'' and ``if and only if'': just use their definitions and the definiton above to check in which circumstances they are true. For example \(\wedge\) is true only if both its inputs are true.
+
+An implication \(\alpha\rightarrow\beta\) is true always when \(\alpha\) is not true. It is best to be understood to mean that ``if \(\alpha\) is true, then \(\beta\) is true. If \(\alpha\) is not true, then \(\beta\) may be true or not.'' This is in harmony with Modus Ponens.
+
+Some formulas, for example \(\neg\neg1\rightarrow1\), are true, no matter what the world situation is. Such sentences represent logically valid, universal formulas.
 \begin{maaritelma}
-Sentence \(X\) is said to be valid if it is true in all world situations. If \(X\) is valid, we write \(\vDash X\).
+Formula \(\psi\) is said to be valid if it is true in all world situations \(m\). If \(\psi\) is valid, we write \(\vDash X\).
 \end{maaritelma}
-Validity a sentence is easy to check: if the sentence has \(n\) words, just check all the different possibilities. There's \(2^n\) of them; it's easy to write a program to do tha.(ill do that) Validity in propositional logic is therefore decidable.
+Logical axioms are valid (if we've chosen them in a sane way). Validity of a formula is easy to check: just try all the different possibilities. If the formula has \(n\) numbers, there's \(2^n\) of them; it's easy to write a program to do tha. (Even though there are infinitely many world situations \(m\), the value of \(m\) only matters in the points that appear in the formula.) Validity in zeroth-order logic is therefore decidable and we can even write a program for deciding it easily.
 
 This demonstrates the powerlessness of propositional logic: if we can check the truth value of a formula in each world situation by brute force, the sentence can't say anything very complicated. In real life we do reasoning because we want to be sure something holds; if all we needed to do was to check validity by using an algorithm, we would not need to reason at all.
 
-Now we can define soundness and completeness more precicely: soundness means that every theorem is valid and completeness that every valid sentence is a theorem. Soundness is needed because it's not good if correct reasoning leds to conclusions that don't hold good, and completeness would be nice, because then we would have a chance to approach knowing everything by reasoning and reasoning. Language being both sound and complete means that validity is equivalent to being a theorem.% a or not a is always a theorem
-
-Now we can discuss what to take as axioms. Any axiom is trivially a theorem, being its own proof, so to make our logic sound we better take only valid sentences as axioms.
+Now we can define soundness and completeness more precicely: soundness means that every theorem is valid and completeness that every valid formula is a theorem. Soundness is needed because it's no good if correct reasoning leds to conclusions that don't hold good, and completeness would be nice, because then we would have a chance to approach knowing everything by reasoning and reasoning. Language being both sound and complete means that validity is equivalent to being a theorem, in other words, \(\vdash\psi\) always when \(\Vdash\psi\).% a or not a is always a theorem
 \begin{teoreema}
-If axioms are valid, then propositional logic is sound.
+Zeroth-order logic is sound.
 \end{teoreema}
 \begin{proof}
-Let axioms be valid. We need to show that given any theorem \(X\) and any world situation, then \(X\) is true. Since \(X\) is a theorem, it has a proof \(X_i\) with \(X=X_n\) for some \(n\in\NN\).
+We need to show that given any theorem \(\psi\) and any world situation, then \(\psi\) is true. Since \(\psi\) is a theorem, it has a proof \(\psi_n\) with \(\psi=\psi_m\) for some \(m\in\NN\).
 
-By the definition of proof, \(X_0\) is an axiom. All axioms are valid, so \(X)\) is true. Now assume that for some \(m\in\NN\) all \(X_i\) with \(i\leq m\) are true. If \(X_{m+1}\) is an axiom, it is true. Otherwise it has been formed by Modus Ponens, that is, \(X_l=X_k\rightarrow X_{m+1}\) for some \(l,k\leq m\). since \(X_l\) and \(X_k\) are both true, it must be that \(X_{m+1}\) is true.
+By the definition of proof, \(\psi_0\) is an axiom. Axioms are valid, so \(\psi_0\) is true. Now assume that for some \(k\in\NN\) all \(\psi_n\) with \(n\leq m\) are true. If \(\psi_{k+1}\) is an axiom, it is true. Otherwise it has been formed by Modus Ponens, that is, \(\psi_l=\psi_j\rightarrow\psi_{k+1}\) for some \(l,j\leq m\). Since \(\psi_l\) and \(\psi_j\) are both true, the definition of truth value ensures that \(\psi_{k+1}\) is true.
 \end{proof}
-The proof used a technique called mathematical induction: we first showed that \(X_0\) is true. Then we showed that if \(X_n\) is true with \(n\leq m\), then also \(X_{m+1}\). Starting from \(X_0\) this condition step by step ensures that all \(X_n\)'s are true. %must show that if A = B > C, then B and C are unique.
+The proof used a technique called mathematical induction: we first showed that \(\psi_0\) is true. Then we showed that if \(\psi_n\) is true with any \(n\leq k\), then also \(\psi_{k+1}\). Starting from \(\psi_0\) this condition step by step ensures that all \(\psi_n\)'s are true. This is hardly surprising; it just means that Modus Ponens conserves validity.%must show that if A = B > C, then B and C are unique.
 
-We speculated that a sentence the form \(\neg\neg A\rightarrow A\) was universally valid. Now that we have a precice definiton of validity, it is easy to check that all sentences of that form are indeed valid. Let's take them as axioms. There are infinitely many of them.
-
-Another sensible sentence type is
-\begin{eqna}
-    (A\rightarrow (B\rightarrow A)).\label{propositional_ax2}
-\end{eqna}
-If it rains, then it holds: ``if a meteorologist says it rains, it rains.'' This may sound weird if you think of \(\rightarrow\) as a causal connection; anyway, here it only means correlation. Sentences of type \eqref{propositional_ax2} are valid; let's take them as axioms. An example of such an axiom is
-\begin{lstlisting}[language=propositio]
-I all_right I yeah all_right
-\end{lstlisting}
-.
-
-These axioms are not enough. We could generate more valid sentence schemes randomly. Here is one (I didn't really create it randomly but quoted from lecture notes):
-\begin{eqna}
-    (A\rightarrow(B\rightarrow C))\rightarrow((A\rightarrow B)\rightarrow(A\rightarrow C)).
-\end{eqna}
-I claim that these axiom schemes are enough.
-\begin{teoreema}
-Propositional logic is complete.
+Completeness and effectiveness are bit more interesting, yet in the case of zeroth-order logic they are also trivial. Because validity is decidable, we can take all valid formulas as our logical axioms, and then every valid formula has a trivial proof, the formula itself. Therefore,
+\begin{teoreema}%or corollary
+Zeroth-order logic is sound, complete and effective.
 \end{teoreema}
-The proof\footnote{See \url{http://users.jyu.fi/~lkurittu/johdlogiikkaan.pdf}, Section 2.3. Unfortunately the proof is in Finnish. With no doubt other proofs can be fround by searching the web.} consists of developing a tedious method for constructing a proof for any valid sentence. It isn't illuminating nor useful since it doesn't work for more advanced languages, so I'll skip it.
+Anyway, we can ask if there is a smaller set of logical axioms that make the logic complete and effective. Yes there is, it turns out. Take all formulas \(\psi\) such that
+\begin{eqnb}
+    \psi&=&\neg\neg\alpha\rightarrow\alpha,\nonumber\\
+    \psi&=&(\alpha\rightarrow(\beta\rightarrow\alpha))\quad\text{or}\nonumber\\
+    \psi&=&(\alpha\rightarrow(\beta\rightarrow\gamma))\rightarrow((\alpha\rightarrow\beta)\rightarrow(\alpha\rightarrow\gamma))\nonumber
+\end{eqnb}
+with \(\alpha\), \(\beta\) and \(\gamma\) any formulas. These are all valid and somewhat reasonable formula types; note that there are an infinite number of actual axioms. These axioms make zeroth-order logic complete. The proof\footnote{See \url{http://users.jyu.fi/~lkurittu/johdlogiikkaan.pdf}, Section 2.3. Unfortunately the proof is in Finnish. With no doubt other proofs can be fround by searching the web.} consists of developing a tedious method for constructing a proof sequence for any valid formula. It isn't illuminating nor useful since it doesn't work for more advanced languages, so I'll skip it.
 
-Let's now prove a theorem, \propositio!I A A!.
-\begin{lstlisting}[language=propositio]
-I A I I A A A
-I I A I I A A A I I A I A A I A A
-I I A I A A I A A
-I A I A A
-I A A
-\end{lstlisting}
-The first line is of the second axiom type, the second line is of the third axiom type and proves the third line from the first (Modus Ponens). Fourth line is of the axiom type two. Line three proves the final theorem from line four.
+Just for fun, let's prove a theorem,\(1\rightarrow1\), from these axioms. Let's use abbreviated notation to keep the proof manageable.
+\begin{eqnb}
+&&1\rightarrow((1\rightarrow1)\rightarrow1)\nonumber\\
+&&(1\rightarrow((1\rightarrow1)\rightarrow1))\rightarrow((1\rightarrow(1\rightarrow1))\rightarrow(1\rightarrow1))\nonumber\\
+&&(1\rightarrow(1\rightarrow1))\rightarrow(1\rightarrow1)\nonumber\\
+&&1\rightarrow(1\rightarrow1)\nonumber\\
+&&1\rightarrow1.\nonumber
+\end{eqnb}
+The first line is of the second axiom type. The second line is of the third axiom type and proves the third line from the first (Modus Ponens). Fourth line is of the axiom type two. Line three proves the final theorem from line four.
 
 Let's collect the results. Propositional logic is sound, complete and effective, which is good. On the other hand, its expressible power is very modest: it can't handle the concept of ``all''. Low expressive power is reflected in the facts that a computer program can decide if a sentence is a valid or not and construct a proof for any valid sentence.
 
 %antiteesi
-\section{Predicate logic}
+%semantics of and, or and implication
+\chapter{First-order logic}
 
 To get more power, we add ``all'' to our language. Some modifications are required; instead of words we will have variables, constants and a predicate symbol. The result is called predicate logic.
 
@@ -1145,7 +1094,7 @@ To implement sentences of the type ``for all \(x\) it holds that \(A\)'', we tak
 
 There are infinitely many propositional logic languages. They are distinguished by their predicate symbols. A predicate symbol is an object which represent some property of a fixed number of constants and variables. A predicate symbol could for example take two numbers and represent the condition that the first is smaller than the second.
 
-For simplicity and the fact that the most important application of predicate logic, set theory, only needs one predicate symbol with two inputs, let's take our logic to include only one two-seat symbol \joukk!K! after? the finnish word ``kuulua''. By imitating our construction it will be easy to construct of predicate logic languages with any predicate symbols.
+For simplicity and the fact that the most important application of predicate logic, set theory, only needs one predicate symbol with two inputs, let's take our logic to include only one two-seat predicate symbol \joukk!K! motivated by the finnish word \emph{kuulua} (``to belong''). By imitating our construction it will be easy to construct of predicate logic languages with any predicate symbols.
 
 \begin{maaritelma}
 A sentence of predicate logic is a finite string of symbols for which one of the following holds:
@@ -1156,23 +1105,27 @@ A sentence of predicate logic is a finite string of symbols for which one of the
     \item It consists of \joukk!K!, a space, a variable or a constant, a space and a variable or a constant.
 \end{itemize}
 \end{maaritelma}
-This clearly is a decidable definition. An example of a sentence is
+This clearly is a decidable definition. For instance
 \begin{lstlisting}[language=joukko]
 I K Bieber town V teen K teen heaven
 \end{lstlisting}
-.
+is a sentence.
 
-We also take some new informal notation. We use Greek letters \(\alpha,\beta,\gamma,\dotsc\) to denote sentences, lowercase letters \(a,b,c\dotsc\) to denote variables and uppercase letters \(A,B,C\dotsc\) to denote constans. We write \(\forall a \psi\) with \(a\) a variable and \(\psi\) any sentence of sentences of the form \joukk!V <a> <psi>!. We also write
+We also take some new informal notation. We use Greek letters \(\alpha,\beta,\gamma,\dotsc\) to denote sentences, lowercase letters \(x,y,z,\dotsc\) to denote variables and uppercase letters \(A,B,C\dotsc\) to denote constans, although exceptions to this convention may occur?.
+
+ We write \(\forall x\,\psi\) with \(a\) a variable and \(\psi\) any sentence of sentences of the form \joukk!V <a> <psi>!. We also write
 \begin{eqna}
-    \neg(\forall a\neg \psi)=\exists a \psi.
+    \neg(\forall x\neg \psi)=\exists x\,\psi.
 \end{eqna}
 The left-hand side reads ``it doesn't hold for all \(a\) that not \(\psi\)'' and the right-hand side reads ``there exist \(a\) such that \(\psi\)'', which are clearly the same thing. A third informal notation is \(a\Subset B\) which stands for a sentence of the form \joukk!K <a> <B>!.
 
+We use parenthesis enough to make an expression unambiguous. which acts first so on?? We also may write \(\forall x\forall y\,\psi=\forall xy\,\psi\) and \(\exists x\exists y\,\psi=\exists xy\,\psi\).
+
 Using this notation our example sentence would read
 \begin{eqna}
-    C\Subset t_1\rightarrow\forall t_2\:t_2\in d
+    C\Subset t_1\rightarrow\forall t_2\:t_2\Subset d
 \end{eqna}
-with \(B=\)\joukk!Bieber!, \(t_1=\)\joukk!town!, \(t_2=\)\joukk!teen! and \(h=\)\joukk!heaven!. To be even less formal, if we read \(a\Subset b\) as ``\(a\) in \(b\)'', an English translation would sound something like ``if Bieber is in town, all teens are in heaven.'' It would not have been possible to express this in propositional logic.
+with \(B=\) \joukk!Bieber!, \(t_1=\) \joukk!town!, \(t_2=\) \joukk!teen! and \(h=\) \joukk!heaven!. To be even less formal, if we read \(a\Subset b\) as ``\(a\) in \(b\)'', an English translation would sound something like ``if Bieber is in town, all teens are in heaven.'' It would not have been possible to express this in propositional logic.
 
 % quantifing, sunbstituting yms.
 
@@ -1186,15 +1139,93 @@ A proof in predicate logic is a finite string of symbols which consists of a con
     \item There is \(j<n\) and a variable \(a\) such that \(\psi_n=\forall a\:\psi_j\).
 \end{enumerate}
 \end{maaritelma}
-Just like in propositional logic, here we also say that a sentence \(\psi\) is a theorem if there is a proof of which last sentence \(\psi\) it is. If that is the case, we write \(\vdash\psi\).
+The last option is called quantificaton. Just like in propositional logic, here we also say that a sentence \(\psi\) is a theorem if there is a proof of which last sentence \(\psi\) it is. If that is the case, we write \(\vdash\psi\). If wether a sentence is an axiom or not is decidable and we have an algorith to ecide it, then it is straightforward to write a program which checks if a string is a proof or not. If ``Is this an axiom?'' decidable, then also ``is this a proof?'' is a decidable and predicate logic is effective.
+
+\section{Semantics}
+
+To define semantics, we need a world situation, or model as it is usually called in predicate logic. A model is all those constants \(A\) and \(B\) for which \(A\Subset B\) hold. Since there are countably infinite number of constants, we can think of a model \(m\) as the map
+\begin{eqna}
+    m:\NN^2\rightarrow\lbrace\text{false},\text{true}\rbrace
+\end{eqna}
+in which \(\NN^2\) numbers pairs of constants. Since
+\begin{eqna}
+    |2^{\NN^2}|=2^{|\NN^2|}=2^{|\NN|}=2^{\aleph_0}=|\RR|,
+\end{eqna}
+there are uncountably many models.
+% explain what recursion is
+
+Given a model \(m\), we can define truth of any sentence recursively. If \(\psi=A\Subset B\) for some constants \(A\) and \(B\), then the truth value of \(\psi\) is \(m(A,B)\). Cases \(\neg\psi\) and \(\alpha\rightarrow\beta\) go exactly as in propositional logic.
+
+If \(\psi=\forall x\,\phi\), then \(\psi\) is true if and only if it is true with any constant put in each free occurrences of \(x\) in \(\phi\). This is captures the essence of ``for all''. If we have \(\psi=x\Subset A\), then \(\psi\) is true if \(\forall x\;x\Subset A\). The other three cases go similarly.
+\begin{maaritelma}% define substitution
+Let \(m\) be a model and \(\psi\) a sentence. \(\psi\) is false, if one of the following conditions hold:
+\begin{itemize}
+    \item \(\psi=\neg\phi\) in which \(\phi\) is true
+    \item \(\psi=\alpha\rightarrow\beta\) in which \(\alpha\) is true and \(\beta\) is false
+    \item \(\psi=\forall x\;\phi\) and there is a constant \(c\) such that \(S_c^x(\phi)\) is false
+    \item \(\psi=x\Subset y\) and there are constants \(A,B\) such that \(A\Subset B\) is false
+    \item \(\psi=A\Subset x\) and there is a constant \(B\) such that \(A\Subset B\) is false
+    \item \(\psi=x\Subset A\) and there is a constant \(B\) such that \(B\Subset A\) is false
+    \item \(\psi=A\Subset B\) and \(m(A,B)=\text{false}\).
+\end{itemize}
+Otherwise \(\psi\) is true.
+\end{maaritelma}
+As in propositional logic, we say that a sentence is valid if it is true in all models. Now we cannot write a program to check the validity of an arbitrary sentence given an arbitrary model, since quantification would require checking an infinite number of possibilities.
+
+\begin{teoreema}
+If axioms are valid, then predicate logic is sound.
+\end{teoreema}
+\begin{proof}
+Let axioms be valid. It is enough to show that given any \(\vdash\psi\) and any model \(m\), then \(\psi\) is true. Since \(\psi\) is a theorem, it has a proof \(\psi_n\) such that \(\psi=\psi_n\) for some \(n\in\NN\).
+
+The first sentence of a proof is necessarily an axiom, so it is valid. Now assume that for some \(m\in\NN\) all sentences of in the proof before \(\psi_m\) are true. If \(\psi_m\) is an axiom, then it is valid and therefore true.
+
+If it has been deduced using Modus Ponens, there are \(l,k<m\) such that \(\psi_l=\psi_k\rightarrow\psi_m\), and by the definition of truth value for implication it must be that \(\psi_m\) is true.
+
+The last option is that \(\psi_m\) has been deduced by quantification. In that case \(\psi_m=\forall x\,\psi_k\) with \(k<m\) and some variable \(x\). We need to show that if \(\phi\) is true, then also \(\forall x\,\phi\) is true, that is, there is no constant \(c\) such that \(S_c^x(\phi)\) is false.
+
+%If \(\phi=a\Subset b\) is true for some variables or constants \(a,b\), then by the definition of truth value of \(\Sub\) \(\phi\) remains true in any substitution.
+
+%Now assume \(\phi\) is not of the form \(a\Subset b\). %
+%If there's no free occurrences of \(x\) in a true \(\phi\), then \(S_c^x(\phi)=\phi\) and therefore \(\forall x\,\phi\) is true. Let's do induction on the number of free occurrences in \(\phi\). Assume that ``\(\phi\) is true \(\Rightarrow\)\footnote{``\(\Rightarrow\)'' denotes the informal ``implies''.} \(\forall x\,\phi\) is true'' holds for \(\phi\) with \(n\) free occurrences of \(x\) in \(\phi\).
+
+
+%If there's no free occurrences of \(x\) in a true \(\phi\), then \(S_c^x(\phi)=\phi\) and therefore \(\forall x\,\phi\) is true. Let's do induction on the number of the free occurrences of \(x\) in \(\phi\). Assume that ``\(\phi\) is true \(\Rightarrow\)\footnote{``\(\Rightarrow\)'' denotes the informal ``implies''.} there is no constant \(c\) such that \(S_c^x(\phi)\) is false'' holds for \(\phi\) with \(n\) or fewer free occurrences of \(x\) in \(\phi\).
+
+%If \(\phi\) has \(n+1\) free occurrences of \(x\), then \(S\)from the definition of sentence it follows that \(\phi=\forall\)
+
+%Every free occurrence of \(x\) is on either side of a \(\Subset\). The truth value of \(\Subset\) was constructed so that if it is true, it can't change to false by substitution of a variable. Therefore 
+KESKEN
+\end{proof}
+
+
+
+
+%reductio ad absurdum / antiteesi / proof by contradiction
+%deduction theorem
+
+
+
+
+ to prove that if all sentences in a proof before \(\psi\) are valid, then 
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
 
 % Is it possible that a human can decide a problem undecidable for a computer?
 % church-turing thesis
-
-
-
-
-
 \begin{maaritelma}
 Sentence \(\psi\) is an axiom of predicate logic if it holds that
 \begin{eqnb}
@@ -1214,18 +1245,18 @@ with \(\alpha\) and \(\beta\) sentences and \(a\) a variable with no free occurr
 \end{maaritelma}
 
 
-
+\chapter{Set theory}
 
 
 %\section{Completeness theorem}
 
 %\section{Set theory}
 
-\chapter{Higher structures}
+\part{Higher structures}
 
-\section{Algebra}
+\chapter{Algebra}
 
-\section{Topology}
+\chapter{Topology}
 
 Another elementary and important structure we can equip a set with is topology. It is a notion of nearness whitout distance which allows us to talk about convergence, which means approaching some point, and continuity of a function, which means that nearby points map to nearby points. Definition of topology is not very obvious, but the concept makes great intuitive sense. Topology captures that what is common with a torus and a coffee cup.
 
@@ -1268,25 +1299,43 @@ Of
 
 
 %osdjfisjfds;lvsd sd vds  kjfd vj hvf kjd nnv kjds nvkjvnd s sd fd   df hfn nhgfn ngf gf gfnh   nf nncskj ds s 
-    
+\begin{comment}    
+\chapter{Analysis}
 
-\section{Analysis}
-
-
-
-
-\section{Geometry}
+\chapter{Geometry}
+%including differential geometry (linear algebra missing, what to do?)
 
 \begin{eqna}
     1,1,1,?,1,1,28,2,8,6,992,1,3,2,16256,2,16,16,523264,24,\dotsc\nonumber
 \end{eqna}
 
+\chapter{Probability}
+
+\part{Elementary physics}
+
+\chapter{Linear algebre}
+
+\chapter{Differential geometry}
+
+\chapter{Mechanics}
 
 
+\chapter{Functional analysis}
 
 
+\chapter{Lie groups}
+
+\part{Space and time}
+
+\part{Zooming in}
+
+quantum
+
+\part{Tracing back}
+
+big bang, structure formation, nucleosynthesis, stardust, Earth, primordial soup, Homo Sapiens.
 
 
-
+\end{comment}
 
 \end{document}
